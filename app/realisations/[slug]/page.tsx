@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section, Eyebrow } from "@/components/ui/Section";
+import { BrowserFrame } from "@/components/ui/BrowserFrame";
 import { Reveal } from "@/components/motion/Reveal";
 import { ImageReveal } from "@/components/motion/ImageReveal";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -72,16 +72,14 @@ export default async function CaseStudyPage({ params }: Props) {
       {/* ——— Visuel principal ——— */}
       <Container>
         <ImageReveal>
-          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-hairline bg-wash">
-            <Image
-              src={study.image}
-              alt={study.imageAlt}
-              fill
-              priority
-              sizes="(min-width: 1200px) 1120px, 100vw"
-              className="object-cover object-top"
-            />
-          </div>
+          <BrowserFrame
+            src={study.image}
+            alt={study.imageAlt}
+            url={study.url.replace(/^https?:\/\//, "")}
+            priority
+            sizes="(min-width: 1200px) 1120px, 100vw"
+            aspect="aspect-[16/9]"
+          />
         </ImageReveal>
       </Container>
 

@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
-import { CaseStudyCard } from "@/components/sections/CaseStudyCard";
+import { CaseStudyRow } from "@/components/sections/CaseStudyRow";
 import { caseStudies } from "@/content/realisations/data";
 
 export const metadata: Metadata = {
@@ -23,10 +23,10 @@ export default function RealisationsPage() {
       />
 
       <Section className="pt-0 md:pt-0 lg:pt-0" rule={false}>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-8">
+        <div className="flex flex-col gap-20 border-t border-hairline pt-16 md:gap-28 md:pt-20">
           {caseStudies.map((study, i) => (
             <Reveal key={study.slug} delay={i * 0.1}>
-              <CaseStudyCard study={study} />
+              <CaseStudyRow study={study} index={i} flip={i % 2 === 1} />
             </Reveal>
           ))}
         </div>
