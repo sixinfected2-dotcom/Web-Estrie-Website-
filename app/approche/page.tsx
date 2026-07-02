@@ -49,7 +49,7 @@ export default function ApprochePage() {
               <li className="flex gap-5">
                 <span
                   aria-hidden
-                  className="font-serif text-[17px] italic leading-[1.6] text-accent"
+                  className="font-serif text-[22px] italic leading-[1.3] text-accent"
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>

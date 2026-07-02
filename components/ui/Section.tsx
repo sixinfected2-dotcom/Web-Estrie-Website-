@@ -18,12 +18,33 @@ type SectionProps = {
   className?: string;
   /** Filet hairline au-dessus de la section. */
   rule?: boolean;
+  /**
+   * Fond pleine largeur — le rythme éditorial papier → encre → papier →
+   * argile → sable de la direction « Argile assumée ».
+   */
+  tone?: "paper" | "ink" | "clay" | "wash";
   id?: string;
 };
 
-export function Section({ children, className = "", rule = true, id }: SectionProps) {
+const toneClass: Record<NonNullable<SectionProps["tone"]>, string> = {
+  paper: "",
+  ink: "bg-ink",
+  clay: "bg-accent",
+  wash: "bg-wash",
+};
+
+export function Section({
+  children,
+  className = "",
+  rule = true,
+  tone = "paper",
+  id,
+}: SectionProps) {
   return (
-    <section id={id} className={rule ? "border-t border-hairline" : ""}>
+    <section
+      id={id}
+      className={`${toneClass[tone]} ${rule ? "border-t border-hairline" : ""}`.trim()}
+    >
       <Container className={`py-20 md:py-28 lg:py-32 ${className}`}>
         {children}
       </Container>

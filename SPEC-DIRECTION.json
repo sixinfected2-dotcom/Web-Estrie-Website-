@@ -1,0 +1,65 @@
+{
+  "name": "Argile assumée",
+  "concept": "L'accent taupe est remplacé par une terre cuite d'argile (#A6512E) traitée comme une vraie couleur éditoriale, pas comme un souligné timide : elle colore les italiques des titres, tous les CTA, et surtout UNE section entière (Réalisations) posée en pleine page comme un cahier couleur de magazine. Le punch vient du rythme des fonds — papier → encre → papier → argile → sable → encre — et d'une échelle Fraunces plus dramatique, pendant que la structure (filets, index numérotés, eyebrows) reste sobre et artisanale. Chaleur premium québécoise : four à pain, brique, érable en octobre — jamais SaaS.",
+  "tokens": {
+    "paper": "#FBF5EE — fond principal, légèrement réchauffé vs l'actuel #FAF6F0 pour dialoguer avec l'argile",
+    "paperRaised": "#FFFDF9 — cartes et surfaces surélevées (inchangé)",
+    "ink": "#241A12 — encre espresso réchauffée (remplace #211C16), sert aussi de fond aux sections sombres",
+    "inkSoft": "#5C5045 — texte secondaire, 7.2:1 sur paper (AA/AAA)",
+    "hairline": "#E8DCCB — filets, réchauffé pour suivre paper",
+    "accent": "#A6512E — argile/terre cuite. 5.08:1 sur paper ET paper sur accent = AA texte normal dans les deux sens; c'est ce qui autorise la section pleine argile",
+    "accentDeep": "#7E3A1F — hover des CTA, texte accent en petit corps (7.7:1 sur paper)",
+    "wash": "#F0E4D5 — sable argileux, fond de la section Approche, fond des images en attente, ::selection",
+    "extra": "--color-accent-bright: #D9764A — argile éclaircie RÉSERVÉE aux fonds encre (italiques de titres, eyebrows, dot du logo footer, hover de liens sur sections sombres). ~5.3:1 sur ink = AA texte normal. Ne jamais l'utiliser sur paper (contraste insuffisant)."
+  },
+  "sections": [
+    {
+      "section": "nav",
+      "background": "paper",
+      "treatment": "Structure inchangée (transparent → bg-paper/90 backdrop-blur au scroll). Trois changements dans Nav.tsx : (1) le dot du logo passe à text-accent (#A6512E) — première note d'argile; (2) le pill « Démarrer un projet » passe de bg-accent taupe à bg-accent argile, hover:bg-accent-deep, texte paper (AA 5.08:1); (3) lien actif : underline decoration-accent conservé mais decoration-[2px] au lieu de 1.5px. Panneau mobile : les items actifs passent en italic + text-accent au lieu d'italic seul. Focus ring déjà sur --color-accent : suit automatiquement."
+    },
+    {
+      "section": "hero",
+      "background": "paper",
+      "treatment": "Fond paper, mais échelle plus dramatique : dans globals.css, text-display passe à font-size: clamp(2.75rem, 7.4vw, 5.75rem), line-height 1.01, letter-spacing -0.026em, opsz 130. Le mot « envie » (déjà en <em>) devient <em className=\"italic text-accent\"> — l'italique Fraunces argile est LA signature typographique du site. Sous les CTA, ajouter un filet éditorial : un border-t border-hairline pt-5 mt-16 portant une ligne meta en text-eyebrow text-ink-soft : « Sherbrooke · Estrie — Sites sur mesure, SEO local » avec un carré de 8px bg-accent inline avant le texte (repère d'argile). CTA primaire = pill argile (via Button), lien secondaire garde son souligné decoration-accent."
+    },
+    {
+      "section": "constat",
+      "background": "ink",
+      "treatment": "Premier choc de rythme : la Section passe en fond encre pleine largeur (wrapper section bg-ink, rule={false}, le filet hairline n'a pas de sens sur fond sombre). Textes : Eyebrow « Le problème » en text-accent-bright; h2 text-title en text-paper avec le mot clé « travaille » en <em className=\"italic text-accent-bright\">; paragraphe text-lead en text-paper/70. Padding vertical augmenté (py-24 md:py-32 lg:py-36) pour que le bloc sombre respire comme une double page. Aucune carte, aucun ornement — juste typo sur encre."
+    },
+    {
+      "section": "services",
+      "background": "paper",
+      "treatment": "Retour paper (border-t border-hairline conservé). Les cartes gardent rounded-2xl border-hairline bg-paper-raised p-8, mais : (1) l'index « 01 » passe de 17px à font-serif text-[30px] italic text-accent leading-none — l'index devient un vrai élément graphique; (2) hover : garder -translate-y-1 mais remplacer l'ombre par hover:border-accent/45 (l'argile souligne, pas d'ombre lourde); (3) le lien « En savoir plus » : underline decoration-accent decoration-2, group-hover:text-accent-deep. Dans le SectionHeader, le mot « démarquer » du titre en <em className=\"italic text-accent\">."
+    },
+    {
+      "section": "realisations",
+      "background": "accent",
+      "treatment": "LE moment signature : section entière en bg-accent (#A6512E), pleine largeur, py-24 md:py-32. Textes : Eyebrow « Nos réalisations » en text-paper/70; titre text-title en text-paper avec « vraies entreprises » en <em className=\"italic\"> (paper italique, pas de 2e couleur); lien « Voir les études de cas » en text-paper underline decoration-paper/50 hover:decoration-paper. CaseStudyCard adapté via une prop tone=\"clay\" : le cadre image passe à border-paper/25 bg-accent-deep (au lieu de border-hairline bg-wash), rounded-2xl conservé; h3 text-paper, group-hover:text-paper (plus d'accent, on est dessus), oneLiner text-paper/70, méta flèche text-paper/70. Le scale 1.02 au hover est conservé. Contraste paper sur #A6512E = 5.08:1 AA. C'est la « couverture couleur » du magazine — ne JAMAIS répéter ce traitement ailleurs sur la page."
+    },
+    {
+      "section": "approche",
+      "background": "wash",
+      "treatment": "Décompression après l'argile : fond bg-wash (#F0E4D5) pleine largeur, sans border-t (la rupture de couleur suffit). Numéros « 01 » en font-serif text-[22px] italic text-accent-deep (le deep, car sur wash le contraste de #A6512E tombe à ~4.4:1 — accent-deep donne 6.6:1); titres des points en text-ink; corps en text-ink-soft. Titre de section : « surprise » en <em className=\"italic text-accent-deep\">. Le lien « En savoir plus sur nous » garde son style Button link. Cartes interdites ici — la grille 2 colonnes à même le fond sable garde le côté artisanal."
+    },
+    {
+      "section": "ctaFinal",
+      "background": "ink",
+      "treatment": "FinalCta refait : abandonner la carte rounded-3xl centrée au profit d'une section pleine largeur bg-ink py-28 md:py-40, alignée à GAUCHE (registre éditorial, pas landing page). Au-dessus du titre, un marquee lent aria-hidden : une seule ligne font-serif italic text-[clamp(2rem,4vw,3.25rem)] text-paper/20 défilant « Sites sur mesure — SEO local — Estrie — » en boucle 45s linéaire, animation coupée sous prefers-reduced-motion (afficher la ligne statique tronquée). Titre en text-display (la nouvelle échelle) text-paper, avec « mérite » en <em className=\"italic text-accent-bright\">. Body text-paper/70. CTA : pill bg-accent text-paper hover:bg-accent-bright (sur fond encre, le hover peut éclaircir) — l'argile sur l'encre, c'est le duo le plus riche de la palette. Lien Instagram : text-paper underline decoration-accent-bright/60 hover:decoration-accent-bright."
+    },
+    {
+      "section": "footer",
+      "background": "ink",
+      "treatment": "Le footer prolonge le CTA final : bg-ink, séparé de lui par un border-t border-paper/12 (les hairlines deviennent paper/12 sur encre). Wordmark « Web Estrie » font-serif text-paper avec le dot en text-accent-bright. Tagline et eyebrows de colonnes en text-paper/55; liens en text-paper hover:text-accent-bright. Ligne légale : border-t border-paper/12, texte text-paper/55 (≥AA sur ink). Résultat : la page se termine ancrée dans l'encre, hero clair / footer sombre = arc complet. Sur les pages intérieures, ce footer sombre fonctionne tel quel."
+    }
+  ],
+  "accentUsage": "L'argile vit à 5 endroits précis : (1) tous les CTA pills (nav, hero, CTA final) en bg-accent; (2) les italiques Fraunces dans les titres — text-accent sur paper, text-accent-bright sur ink, text-accent-deep sur wash — un seul mot par titre, jamais plus; (3) les index numérotés « 01 » des services et de l'approche; (4) les soulignés de liens (decoration-accent) et le dot du logo; (5) UNE surface pleine : la section Réalisations. Plus ::selection (bg-accent, texte paper), le focus ring et le carré de 8px du filet meta du hero. Nulle part ailleurs — pas de fonds de cartes teintés, pas de dégradés, pas d'icônes colorées.",
+  "signatureMoments": [
+    "La section Réalisations entièrement terre cuite — un cahier couleur de magazine où les photos des sites, encadrées d'un filet papier sur fond argile, deviennent les héroïnes de la page.",
+    "Le rythme des fonds sur une seule page : papier → encre (constat) → papier (services) → argile (réalisations) → sable (approche) → encre (CTA + footer), chaque rupture pleine largeur, sans carte-conteneur.",
+    "L'italique Fraunces argile — un seul mot coloré par titre (« envie », « travaille », « mérite ») + le marquee lent en Fraunces italic paper/20 au-dessus du CTA final."
+  ],
+  "whyPunch": "Aujourd'hui, 100 % de la page est claire et l'accent taupe est quasi invisible : rien ne s'imprime en mémoire. Cette direction crée trois niveaux de contraste — clair/sombre (deux sections encre pleine largeur au lieu d'une carte arrondie timide), neutre/coloré (une section entière d'argile là où l'accent occupait ~1 % des pixels), et petit/énorme (display qui monte à 5.75rem + marquee géant). Le taupe demandait la permission; la terre cuite signe. Et parce qu'elle reste UNE seule teinte déclinée en trois nuances, portée par les mêmes Fraunces/Hanken, filets et index, ça reste éditorial et crédible pour une PME — chaleureux comme de la brique, pas criard comme du néon.",
+  "risks": "1) La terre cuite peut glisser vers un registre « resto/artisan alimentaire » si elle déborde — tenir la règle stricte du un-mot-italique-par-titre et de l'unique section pleine argile. 2) La section Réalisations en argile vit ou meurt par les photos : des captures d'écran fades sur fond terracotta paraîtront cheap — prévoir des mockups propres avec le cadre paper/25 obligatoire. 3) #A6512E est AA (5.08:1) mais pas AAA : interdire l'accent pour du corps de texte long et pour du texte < 14px sur paper (utiliser accent-deep). 4) accent-bright (#D9764A) sur paper ne passe pas AA — un dev pressé qui le réutilise sur fond clair casse l'accessibilité; le commenter explicitement dans globals.css. 5) Trois ruptures de fond sur une page exigent des paddings généreux (py-28+) sinon effet patchwork; ne pas ajouter de témoignage coloré entre approche et CTA final. 6) La terracotta dérive vers l'orange sur écrans bas de gamme/mal calibrés — vérifier sur un écran non-Apple avant livraison."
+}

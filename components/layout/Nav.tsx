@@ -63,7 +63,7 @@ export function Nav() {
                     aria-current={isActive(href) ? "page" : undefined}
                     className={`text-[14.5px] font-medium transition-colors hover:text-ink ${
                       isActive(href)
-                        ? "text-ink underline decoration-accent decoration-[1.5px] underline-offset-[6px]"
+                        ? "text-ink underline decoration-accent decoration-[2px] underline-offset-[6px]"
                         : "text-ink-soft"
                     }`}
                   >
@@ -124,7 +124,7 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   aria-current={isActive(href) ? "page" : undefined}
                   className={`text-title block py-2 ${
-                    isActive(href) ? "text-ink italic" : "text-ink"
+                    isActive(href) ? "italic text-accent" : "text-ink"
                   }`}
                 >
                   {label}

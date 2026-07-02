@@ -1,16 +1,24 @@
 @import "tailwindcss";
 
-/* ————— Design tokens — Web Estrie, lane C (quasi-neutre) ————— */
+/* ————— Design tokens — Web Estrie, direction « Argile assumée » ————— */
 
 @theme {
-  --color-paper: #faf6f0;
+  --color-paper: #fbf5ee;
   --color-paper-raised: #fffdf9;
-  --color-ink: #211c16;
-  --color-ink-soft: #575046;
-  --color-hairline: #e6ded2;
-  --color-accent: #4e4639;
-  --color-accent-deep: #37312a;
-  --color-wash: #ece6db;
+  --color-ink: #241a12;
+  --color-ink-soft: #5c5045;
+  --color-hairline: #e8dccb;
+  --color-accent: #a6512e;
+  --color-accent-deep: #7e3a1f;
+  /*
+   * ⚠️ accent-bright (#D9764A) est RÉSERVÉ aux fonds encre (bg-ink) :
+   * italiques de titres, eyebrows, dot du logo footer, hovers de liens
+   * sur sections sombres (~5.3:1 sur ink = AA).
+   * NE JAMAIS l'utiliser sur paper/wash — contraste insuffisant (< AA).
+   * Sur paper : accent (#A6512E, 5.08:1) ou accent-deep (#7E3A1F, 7.7:1).
+   */
+  --color-accent-bright: #d9764a;
+  --color-wash: #f0e4d5;
 
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -41,8 +49,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-wash);
-  color: var(--color-ink);
+  background: var(--color-accent);
+  color: var(--color-paper);
 }
 
 :focus-visible {
@@ -55,11 +63,11 @@ body {
 
 @utility text-display {
   font-family: var(--font-serif);
-  font-variation-settings: "opsz" 110;
+  font-variation-settings: "opsz" 130;
   font-weight: 400;
-  font-size: clamp(2.5rem, 6.2vw, 4.75rem);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
+  font-size: clamp(2.75rem, 7.4vw, 5.75rem);
+  line-height: 1.01;
+  letter-spacing: -0.026em;
 }
 
 @utility text-title {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Section } from "../ui/Section";
+import { Container } from "../ui/Container";
 import { Reveal } from "../motion/Reveal";
 import { Magnetic } from "../motion/MagneticButton";
 import { site } from "@/lib/data";
@@ -12,6 +12,11 @@ type FinalCtaProps = {
   instagram?: boolean;
 };
 
+/**
+ * CTA final pleine largeur en encre, registre éditorial aligné à gauche.
+ * Le footer (bg-ink lui aussi) le prolonge — la page se termine ancrée
+ * dans l'encre.
+ */
 export function FinalCta({
   title,
   body,
@@ -19,20 +24,18 @@ export function FinalCta({
   instagram = false,
 }: FinalCtaProps) {
   return (
-    <Section rule={false} className="pt-4 md:pt-4 lg:pt-4">
-      <Reveal>
-        <div className="rounded-3xl bg-ink px-8 py-16 text-center md:px-16 md:py-24">
-          <h2 className="text-title mx-auto max-w-[24ch] text-paper">{title}</h2>
+    <section className="bg-ink">
+      <Container className="py-28 md:py-40">
+        <Reveal>
+          <h2 className="text-display max-w-[18ch] text-paper">{title}</h2>
           {body ? (
-            <p className="text-lead mx-auto mt-5 max-w-[44ch] text-paper/70">
-              {body}
-            </p>
+            <p className="text-lead mt-7 max-w-[48ch] text-paper/70">{body}</p>
           ) : null}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-7">
+          <div className="mt-12 flex flex-wrap items-center gap-7">
             <Magnetic>
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-paper px-7 py-3.5 text-[15px] font-semibold text-ink transition-colors duration-300 hover:bg-wash"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[15px] font-semibold text-paper transition-colors duration-300 hover:bg-accent-bright"
               >
                 {cta}
                 <span
@@ -48,14 +51,14 @@ export function FinalCta({
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] font-semibold text-paper underline decoration-paper/40 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-paper"
+                className="text-[15px] font-semibold text-paper underline decoration-accent-bright/60 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-accent-bright"
               >
                 Nous écrire sur Instagram
               </a>
             ) : null}
           </div>
-        </div>
-      </Reveal>
-    </Section>
+        </Reveal>
+      </Container>
+    </section>
   );
 }

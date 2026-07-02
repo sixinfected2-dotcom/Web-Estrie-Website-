@@ -15,7 +15,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#FAF6F0",
+          background: "#FBF5EE",
           padding: "72px 80px",
           fontFamily: "Georgia, serif",
         }}
@@ -23,22 +23,31 @@ export default function OpengraphImage() {
         <div
           style={{
             display: "flex",
+            alignItems: "center",
+            gap: 16,
             fontSize: 26,
             letterSpacing: "0.16em",
             textTransform: "uppercase",
-            color: "#575046",
+            color: "#5C5045",
           }}
         >
+          <div
+            style={{
+              display: "flex",
+              width: 14,
+              height: 14,
+              background: "#A6512E",
+            }}
+          />
           Agence web · Estrie
         </div>
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             fontSize: 84,
-            lineHeight: 1.08,
-            letterSpacing: "-0.02em",
-            color: "#211C16",
+            lineHeight: 1.05,
+            letterSpacing: "-0.026em",
+            color: "#241A12",
             maxWidth: 980,
           }}
         >
@@ -49,14 +58,14 @@ export default function OpengraphImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderTop: "1px solid #E6DED2",
+            borderTop: "1px solid #E8DCCB",
             paddingTop: 32,
           }}
         >
-          <div style={{ display: "flex", fontSize: 36, color: "#211C16" }}>
-            Web Estrie<span style={{ color: "#4E4639" }}>.</span>
+          <div style={{ display: "flex", fontSize: 36, color: "#241A12" }}>
+            Web Estrie<span style={{ color: "#A6512E" }}>.</span>
           </div>
-          <div style={{ display: "flex", fontSize: 26, color: "#575046" }}>
+          <div style={{ display: "flex", fontSize: 26, color: "#5C5045" }}>
             webestrie.ca
           </div>
         </div>

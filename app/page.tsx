@@ -53,7 +53,7 @@ export default function Home() {
               <Fragment key="l1">On bâtit des sites</Fragment>,
               <Fragment key="l2">que vos clients ont</Fragment>,
               <Fragment key="l3">
-                <em className="italic">envie</em>
+                <em className="italic text-accent">envie</em>
                 {" d’utiliser."}
               </Fragment>,
             ]}
@@ -75,21 +75,28 @@ export default function Home() {
               </Button>
             </div>
           </Reveal>
+          <Reveal delay={0.8} y={10}>
+            <p className="text-eyebrow mt-16 flex items-center gap-3 border-t border-hairline pt-5 text-ink-soft">
+              <span aria-hidden className="inline-block h-2 w-2 bg-accent" />
+              Sherbrooke · Estrie — Sites sur mesure, SEO local
+            </p>
+          </Reveal>
         </Container>
       </section>
 
-      {/* ——— Bloc 2 — Le constat ——— */}
-      <Section>
+      {/* ——— Bloc 2 — Le constat — première rupture encre ——— */}
+      <Section tone="ink" rule={false} className="py-24 md:py-32 lg:py-36">
         <div className="grid gap-10 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-5">
-            <Eyebrow>Le problème</Eyebrow>
-            <h2 className="text-title mt-4 text-ink">
-              Un beau site, c&rsquo;est bien. Un site qui travaille pour vous,
-              c&rsquo;est mieux.
+            <p className="text-eyebrow text-accent-bright">Le problème</p>
+            <h2 className="text-title mt-4 text-paper">
+              Un beau site, c&rsquo;est bien. Un site qui{" "}
+              <em className="italic text-accent-bright">travaille</em>
+              {" pour vous, c’est mieux."}
             </h2>
           </Reveal>
           <Reveal delay={0.12} className="md:col-span-7 md:pt-12">
-            <p className="text-lead max-w-[58ch] text-ink-soft">
+            <p className="text-lead max-w-[58ch] text-paper/70">
               Trop d&rsquo;entreprises locales se retrouvent avec un template
               recyclé, lent, qui ressemble à celui du voisin — pis qui dort.
               Chez Web Estrie, chaque site est bâti à la main, à partir de
@@ -107,7 +114,12 @@ export default function Home() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
             eyebrow="Ce qu'on fait"
-            title="Trois façons de vous démarquer en ligne."
+            title={
+              <>
+                Trois façons de vous{" "}
+                <em className="italic text-accent">démarquer</em> en ligne.
+              </>
+            }
           />
           <Reveal delay={0.15} className="hidden md:block">
             <Button href="/services" variant="link">
@@ -120,16 +132,16 @@ export default function Home() {
             <Reveal key={service.slug} delay={i * 0.09} className="h-full">
               <Link
                 href="/services"
-                className="group flex h-full flex-col rounded-2xl border border-hairline bg-paper-raised p-8 transition-all duration-300 ease-editorial hover:-translate-y-1 hover:shadow-[0_14px_34px_-18px_rgba(33,28,22,0.22)]"
+                className="group flex h-full flex-col rounded-2xl border border-hairline bg-paper-raised p-8 transition-all duration-300 ease-editorial hover:-translate-y-1 hover:border-accent/45"
               >
-                <span className="font-serif text-[17px] italic text-accent">
+                <span className="font-serif text-[30px] italic leading-none text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-heading mt-4 text-ink">{service.title}</h3>
                 <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-soft">
                   {service.short}
                 </p>
-                <span className="mt-6 text-[14px] font-semibold text-ink underline decoration-accent decoration-[1.5px] underline-offset-[5px] transition-colors group-hover:text-accent">
+                <span className="mt-6 text-[14px] font-semibold text-ink underline decoration-accent decoration-2 underline-offset-[5px] transition-colors group-hover:text-accent-deep">
                   En savoir plus
                 </span>
               </Link>
@@ -143,44 +155,70 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* ——— Bloc 4 — Aperçu des réalisations ——— */}
-      <Section>
+      {/* ——— Bloc 4 — Aperçu des réalisations — le cahier couleur argile ——— */}
+      <Section tone="clay" rule={false} className="py-24 md:py-32">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeader
-            eyebrow="Nos réalisations"
-            title="Du vrai travail, pour de vraies entreprises."
-          />
+          <Reveal className="max-w-2xl">
+            <p className="text-eyebrow text-paper/70">Nos réalisations</p>
+            <h2 className="text-title mt-4 text-paper">
+              Du vrai travail, pour de{" "}
+              <em className="italic">vraies entreprises</em>.
+            </h2>
+          </Reveal>
           <Reveal delay={0.15} className="hidden md:block">
-            <Button href="/realisations" variant="link">
+            <Link
+              href="/realisations"
+              className="group inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-paper underline decoration-paper/50 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-paper"
+            >
               Voir les études de cas
-            </Button>
+              <span
+                aria-hidden
+                className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
+              >
+                →
+              </span>
+            </Link>
           </Reveal>
         </div>
         <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-8">
           {caseStudies.map((study, i) => (
             <Reveal key={study.slug} delay={i * 0.1}>
-              <CaseStudyCard study={study} />
+              <CaseStudyCard study={study} tone="clay" />
             </Reveal>
           ))}
         </div>
         <Reveal className="mt-10 md:hidden">
-          <Button href="/realisations" variant="link">
+          <Link
+            href="/realisations"
+            className="group inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-paper underline decoration-paper/50 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-paper"
+          >
             Voir les études de cas
-          </Button>
+            <span
+              aria-hidden
+              className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </Link>
         </Reveal>
       </Section>
 
-      {/* ——— Bloc 5 — Aperçu de l'approche ——— */}
-      <Section>
+      {/* ——— Bloc 5 — Aperçu de l'approche — décompression sable ——— */}
+      <Section tone="wash" rule={false}>
         <SectionHeader
           eyebrow="Notre approche"
-          title="Simple, direct, sans mauvaise surprise."
+          title={
+            <>
+              Simple, direct, sans mauvaise{" "}
+              <em className="italic text-accent-deep">surprise</em>.
+            </>
+          }
         />
         <div className="mt-14 grid gap-x-16 gap-y-12 sm:grid-cols-2">
           {approachPoints.map((point, i) => (
             <Reveal key={point.title} delay={i * 0.08}>
               <div className="flex gap-5">
-                <span className="font-serif text-[17px] italic leading-[1.6] text-accent">
+                <span className="font-serif text-[22px] italic leading-[1.3] text-accent-deep">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -209,7 +247,12 @@ export default function Home() {
 
       {/* ——— Bloc 7 — CTA final ——— */}
       <FinalCta
-        title="Prêt à donner à votre entreprise le site qu’elle mérite?"
+        title={
+          <>
+            Prêt à donner à votre entreprise le site qu&rsquo;elle{" "}
+            <em className="italic text-accent-bright">mérite</em>?
+          </>
+        }
         body="Parlez-nous de votre projet. On vous répond vite, sans engagement."
         instagram
       />

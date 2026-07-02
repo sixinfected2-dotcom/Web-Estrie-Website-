@@ -31,7 +31,7 @@ export default function ServicesPage() {
                 className="grid gap-8 border-t border-hairline py-14 md:grid-cols-12 md:gap-12 md:py-20"
               >
                 <div className="md:col-span-5">
-                  <span className="font-serif text-[17px] italic text-accent">
+                  <span className="font-serif text-[30px] italic leading-none text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h2 className="text-title mt-3 text-ink">{service.title}</h2>
