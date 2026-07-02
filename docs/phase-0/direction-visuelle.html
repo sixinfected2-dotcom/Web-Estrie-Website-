@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Estrie — Phase 0 · Directions visuelles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF6F0;
+    --paper-raised: #FFFDF9;
+    --ink: #211C16;
+    --ink-soft: #575046;
+    --hairline: #E6DED2;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Hanken Grotesk", -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+  /* ————— entrance ————— */
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .rise { animation: rise .7s cubic-bezier(.22,1,.36,1) both; }
+  .rise-2 { animation-delay: .08s; }
+  .rise-3 { animation-delay: .16s; }
+
+  /* ————— shared editorial atoms ————— */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .doc-h2 {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 60;
+    font-weight: 420;
+    font-size: clamp(28px, 3.6vw, 40px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin-top: 14px;
+  }
+  .doc-note { color: var(--ink-soft); max-width: 62ch; margin-top: 14px; }
+
+  header.masthead {
+    padding: 84px 0 56px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .masthead .doc-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-soft);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 7px 16px;
+    background: var(--paper-raised);
+  }
+  .masthead h1 {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 120;
+    font-weight: 380;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin-top: 28px;
+    max-width: 18ch;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .masthead p { margin-top: 22px; max-width: 58ch; color: var(--ink-soft); font-size: 18px; }
+
+  section.block { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
+
+  /* ————— fondation swatches ————— */
+  .foundation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-top: 40px; }
+  .swatch-card {
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--paper-raised);
+  }
+  .swatch-card .chip { height: 96px; }
+  .swatch-card .meta { padding: 14px 18px; }
+  .swatch-card .meta strong { display: block; font-size: 14px; font-weight: 600; }
+  .swatch-card .meta span { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px 40px; margin-top: 44px; }
+  .principles div strong { font-family: var(--serif); font-style: italic; font-weight: 450; font-size: 19px; letter-spacing: -0.01em; }
+  .principles div p { color: var(--ink-soft); font-size: 15px; margin-top: 6px; }
+
+  /* ————— typo specimens ————— */
+  .pairings { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
+  @media (max-width: 880px) { .pairings { grid-template-columns: 1fr; } }
+  .pairing {
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    background: var(--paper-raised);
+    padding: 40px 40px 34px;
+    position: relative;
+  }
+  .pairing .num {
+    position: absolute; top: 30px; right: 36px;
+    font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-soft); opacity: .55;
+  }
+  .pairing .label { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+  .pairing .names { margin-top: 10px; font-size: 14px; color: var(--ink-soft); }
+  .pairing .specimen-h {
+    margin-top: 30px;
+    font-size: clamp(30px, 3.4vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    font-weight: 420;
+  }
+  .pairing .specimen-body { margin-top: 20px; font-size: 16.5px; line-height: 1.65; color: var(--ink-soft); max-width: 46ch; }
+  .pairing .specimen-detail { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--hairline); display: flex; gap: 26px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
+
+  .pairing.p1 .specimen-h { font-family: "Fraunces", serif; font-variation-settings: "opsz" 90; }
+  .pairing.p1 .specimen-body, .pairing.p1 .specimen-detail { font-family: "Hanken Grotesk", sans-serif; }
+  .pairing.p2 .specimen-h { font-family: "Instrument Serif", serif; font-weight: 400; font-size: clamp(32px, 3.7vw, 46px); }
+  .pairing.p2 .specimen-body, .pairing.p2 .specimen-detail { font-family: "Instrument Sans", sans-serif; }
+  .specimen-h em { font-style: italic; font-weight: 400; }
+
+  /* ═════════ LANES ═════════ */
+  .lane {
+    border: 1px solid var(--hairline);
+    border-radius: 22px;
+    background: var(--lane-paper, var(--paper));
+    margin-top: 40px;
+    overflow: hidden;
+  }
+  .lane-head {
+    display: flex; align-items: baseline; gap: 22px; flex-wrap: wrap;
+    padding: 40px 48px 0;
+  }
+  .lane-letter {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 120;
+    font-style: italic;
+    font-weight: 380;
+    font-size: 58px;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .lane-title h3 { font-family: var(--sans); font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+  .lane-title p { font-size: 14.5px; color: var(--ink-soft); margin-top: 3px; max-width: 52ch; }
+
+  .lane-body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 48px;
+    padding: 36px 48px 48px;
+  }
+  @media (max-width: 940px) { .lane-body { grid-template-columns: 1fr; } }
+
+  /* palette column */
+  .palette { display: flex; flex-direction: column; gap: 10px; }
+  .palette .p-label { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 4px; }
+  .palette .row {
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid var(--hairline); border-radius: 12px;
+    background: var(--paper-raised);
+    padding: 10px 14px;
+  }
+  .palette .dot { width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0; border: 1px solid rgba(0,0,0,.06); }
+  .palette .row strong { font-size: 13.5px; font-weight: 600; display: block; }
+  .palette .row span { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+  .palette .usage { font-size: 13px; color: var(--ink-soft); line-height: 1.55; margin-top: 14px; padding-top: 16px; border-top: 1px solid var(--hairline); }
+
+  /* sample components column */
+  .samples { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+  .mini-hero {
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    background: var(--paper-raised);
+    padding: 52px 52px 48px;
+  }
+  .mini-hero .eyebrow { color: var(--accent); }
+  .mini-hero h4 {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 100;
+    font-weight: 400;
+    font-size: clamp(30px, 3.8vw, 46px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin-top: 18px;
+    max-width: 17ch;
+  }
+  .mini-hero h4 em { font-style: italic; color: var(--accent); }
+  .mini-hero .sub { margin-top: 18px; color: var(--ink-soft); max-width: 48ch; font-size: 16.5px; }
+  .cta-row { display: flex; align-items: center; gap: 26px; margin-top: 32px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans);
+    font-size: 15px; font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent, #FAF6F0);
+    text-decoration: none;
+    transition: transform .25s cubic-bezier(.22,1,.36,1), background .25s;
+  }
+  .btn:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn .arr { transition: transform .25s cubic-bezier(.22,1,.36,1); }
+  .btn:hover .arr { transform: translateX(3px); }
+
+  .link {
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 5px;
+    transition: color .2s;
+  }
+  .link:hover { color: var(--accent); }
+
+  .sample-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 720px) { .sample-duo { grid-template-columns: 1fr; } }
+
+  .svc-card {
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    background: var(--paper-raised);
+    padding: 34px 34px 30px;
+    transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s;
+  }
+  .svc-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px -18px rgba(33,28,22,.22); }
+  .svc-card .idx { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--accent); }
+  .svc-card h5 { font-family: var(--serif); font-variation-settings: "opsz" 40; font-weight: 480; font-size: 23px; letter-spacing: -0.012em; margin-top: 14px; }
+  .svc-card p { font-size: 15px; color: var(--ink-soft); margin-top: 10px; }
+  .svc-card .more { display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 1.5px; text-underline-offset: 5px; }
+
+  .sec-head-sample {
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    background: var(--paper-raised);
+    padding: 34px 34px 30px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .sec-head-sample .eyebrow { color: var(--accent); }
+  .sec-head-sample h5 {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 60;
+    font-weight: 420;
+    font-size: 27px; line-height: 1.15; letter-spacing: -0.015em;
+    margin-top: 12px; max-width: 22ch;
+  }
+  .sec-head-sample .rule { width: 44px; height: 2px; background: var(--accent); margin-top: 20px; }
+
+  /* ————— lane accents ————— */
+  .lane-a { --accent: #A6512E; --accent-deep: #8A4023; --on-accent: #FBF3EC; }
+  .lane-b { --accent: #2C4459; --accent-deep: #203445; --on-accent: #F2F4F3; }
+  .lane-c { --accent: #4E4639; --accent-deep: #37312A; --on-accent: #F7F3EB; }
+  .lane-c .mini-hero h4 em { color: var(--ink); }
+  .lane-c .mini-hero .eyebrow, .lane-c .sec-head-sample .eyebrow { color: var(--ink-soft); }
+
+  /* ————— choix final ————— */
+  .decide { padding: 80px 0 110px; }
+  .decide ul { margin-top: 26px; list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+  .decide li {
+    display: flex; gap: 16px; align-items: baseline;
+    border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--paper-raised);
+    padding: 18px 24px; font-size: 16px;
+  }
+  .decide li .n { font-family: var(--serif); font-style: italic; color: var(--ink-soft); flex-shrink: 0; }
+  footer.colophon { padding: 0 0 60px; color: var(--ink-soft); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="doc-tag rise">Web Estrie · Phase 0 · Document interne</span>
+    <h1 class="rise rise-2">Trois directions.<br><em>Une seule</em> à choisir.</h1>
+    <p class="rise rise-3">La fondation est verrouillée : papier chaud, encre chaude, beaucoup d'air, serif éditoriale. Ce qui change entre les trois lanes, c'est <strong>l'accent</strong> — la couleur qui signe les CTA, les liens et les petits détails. Regarde les trois, pointe celle qui te parle.</p>
+  </header>
+
+  <!-- ═══════ FONDATION ═══════ -->
+  <section class="block">
+    <span class="eyebrow">La fondation — verrouillée</span>
+    <h2 class="doc-h2">Ce qui ne change pas, peu importe la lane.</h2>
+    <p class="doc-note">C'est ~90&nbsp;% du feeling « simple mais clean ». Le papier et l'encre sont chauds — jamais cliniques — et le vide est un élément de design.</p>
+
+    <div class="foundation-grid">
+      <div class="swatch-card">
+        <div class="chip" style="background:#FAF6F0; border-bottom:1px solid var(--hairline);"></div>
+        <div class="meta"><strong>Papier</strong><span>#FAF6F0 — fond principal</span></div>
+      </div>
+      <div class="swatch-card">
+        <div class="chip" style="background:#FFFDF9; border-bottom:1px solid var(--hairline);"></div>
+        <div class="meta"><strong>Papier relevé</strong><span>#FFFDF9 — cartes, surfaces</span></div>
+      </div>
+      <div class="swatch-card">
+        <div class="chip" style="background:#211C16;"></div>
+        <div class="meta"><strong>Encre</strong><span>#211C16 — titres, texte</span></div>
+      </div>
+      <div class="swatch-card">
+        <div class="chip" style="background:#575046;"></div>
+        <div class="meta"><strong>Encre douce</strong><span>#575046 — texte secondaire</span></div>
+      </div>
+      <div class="swatch-card">
+        <div class="chip" style="background:#E6DED2;"></div>
+        <div class="meta"><strong>Hairline</strong><span>#E6DED2 — bordures, filets</span></div>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div><strong>Beaucoup d'air.</strong><p>Le vide structure la page. On ne remplit pas pour remplir.</p></div>
+      <div><strong>Typo avant effets.</strong><p>La sophistication vient de la serif, de l'échelle et du rythme — pas des gadgets.</p></div>
+      <div><strong>Un seul accent.</strong><p>Utilisé avec parcimonie : CTA, liens, petits détails. Jamais en aplat criard.</p></div>
+      <div><strong>Retenue.</strong><p>Pas de dégradés lourds, pas d'ombres épaisses, pas de bordures partout.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══════ TYPO ═══════ -->
+  <section class="block">
+    <span class="eyebrow">Décision 1 — le pairing typo</span>
+    <h2 class="doc-h2">Deux voix. Même contenu, personnalité différente.</h2>
+    <p class="doc-note">La serif porte la personnalité, la sans reste discrète et ultra-lisible. Les deux pairings sont sur Google Fonts (gratuit, performant via <code>next/font</code>). Choix indépendant de la lane d'accent.</p>
+
+    <div class="pairings">
+      <div class="pairing p1">
+        <span class="num">01</span>
+        <span class="label">Pairing 1</span>
+        <p class="names"><strong>Fraunces</strong> (titres) + <strong>Hanken Grotesk</strong> (texte)</p>
+        <p class="specimen-h">On bâtit des sites que vos clients ont <em>envie</em> d'utiliser.</p>
+        <p class="specimen-body">Des sites web sur mesure pour les entreprises de l'Estrie. Pas de template générique — des sites propres, rapides, pensés pour convertir.</p>
+        <div class="specimen-detail">
+          <span><strong>Caractère :</strong> chaleureux, texturé, littéraire</span>
+          <span><strong>Registre :</strong> magazine indépendant</span>
+        </div>
+      </div>
+      <div class="pairing p2">
+        <span class="num">02</span>
+        <span class="label">Pairing 2</span>
+        <p class="names"><strong>Instrument Serif</strong> (titres) + <strong>Instrument Sans</strong> (texte)</p>
+        <p class="specimen-h">On bâtit des sites que vos clients ont <em>envie</em> d'utiliser.</p>
+        <p class="specimen-body">Des sites web sur mesure pour les entreprises de l'Estrie. Pas de template générique — des sites propres, rapides, pensés pour convertir.</p>
+        <div class="specimen-detail">
+          <span><strong>Caractère :</strong> fin, contemporain, tranchant</span>
+          <span><strong>Registre :</strong> studio de design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ LANES ═══════ -->
+  <section class="block">
+    <span class="eyebrow">Décision 2 — la lane d'accent</span>
+    <h2 class="doc-h2">Trois accents, même fondation.</h2>
+    <p class="doc-note">Chaque tile montre la palette et les mêmes composants réels du futur site : hero, CTA, carte de service, en-tête de section. (Rendus ici en Fraunces — le pairing se décide séparément.)</p>
+
+    <!-- ——— LANE A ——— -->
+    <article class="lane lane-a">
+      <div class="lane-head">
+        <span class="lane-letter">A</span>
+        <div class="lane-title">
+          <h3>Argile chaude</h3>
+          <p>Éditorial chaleureux. L'accent terre cuite prolonge la chaleur du papier — accueillant, artisanal, humain.</p>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="palette">
+          <span class="p-label">Palette</span>
+          <div class="row"><span class="dot" style="background:#A6512E;"></span><div><strong>Argile</strong><span>#A6512E — accent</span></div></div>
+          <div class="row"><span class="dot" style="background:#8A4023;"></span><div><strong>Argile profonde</strong><span>#8A4023 — hover</span></div></div>
+          <div class="row"><span class="dot" style="background:#F1E0D4;"></span><div><strong>Lavis argile</strong><span>#F1E0D4 — fonds discrets</span></div></div>
+          <p class="usage">L'accent vit dans les CTA, les soulignés de liens, les index de cartes et les eyebrows. Jamais en grande surface.</p>
+        </div>
+        <div class="samples">
+          <div class="mini-hero">
+            <span class="eyebrow">Agence web · Estrie</span>
+            <h4>On bâtit des sites que vos clients ont <em>envie</em> d'utiliser.</h4>
+            <p class="sub">Des sites web sur mesure pour les entreprises de l'Estrie. Pas de template générique — des sites propres, rapides, pensés pour convertir.</p>
+            <div class="cta-row">
+              <a class="btn" href="#">Démarrer un projet <span class="arr">→</span></a>
+              <a class="link" href="#">Voir nos réalisations</a>
+            </div>
+          </div>
+          <div class="sample-duo">
+            <div class="svc-card">
+              <span class="idx">01</span>
+              <h5>Site vitrine</h5>
+              <p>Une présence professionnelle qui inspire confiance pis fait sonner le téléphone.</p>
+              <a class="more" href="#">En savoir plus</a>
+            </div>
+            <div class="sec-head-sample">
+              <span class="eyebrow">Ce qu'on fait</span>
+              <h5>Trois façons de vous démarquer en ligne.</h5>
+              <div class="rule"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ——— LANE B ——— -->
+    <article class="lane lane-b">
+      <div class="lane-head">
+        <span class="lane-letter">B</span>
+        <div class="lane-title">
+          <h3>Encre bleue profonde</h3>
+          <p>Plus pro, plus sérieux. Un bleu sourd, presque encre — assez foncé pour éviter tout cliché tech. Inspire la solidité.</p>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="palette">
+          <span class="p-label">Palette</span>
+          <div class="row"><span class="dot" style="background:#2C4459;"></span><div><strong>Encre bleue</strong><span>#2C4459 — accent</span></div></div>
+          <div class="row"><span class="dot" style="background:#203445;"></span><div><strong>Encre nuit</strong><span>#203445 — hover</span></div></div>
+          <div class="row"><span class="dot" style="background:#E4E8EA;"></span><div><strong>Lavis brume</strong><span>#E4E8EA — fonds discrets</span></div></div>
+          <p class="usage">Le bleu foncé donne des CTA très lisibles et un ton « cabinet de confiance ». Le contraste avec le papier chaud est élégant.</p>
+        </div>
+        <div class="samples">
+          <div class="mini-hero">
+            <span class="eyebrow">Agence web · Estrie</span>
+            <h4>On bâtit des sites que vos clients ont <em>envie</em> d'utiliser.</h4>
+            <p class="sub">Des sites web sur mesure pour les entreprises de l'Estrie. Pas de template générique — des sites propres, rapides, pensés pour convertir.</p>
+            <div class="cta-row">
+              <a class="btn" href="#">Démarrer un projet <span class="arr">→</span></a>
+              <a class="link" href="#">Voir nos réalisations</a>
+            </div>
+          </div>
+          <div class="sample-duo">
+            <div class="svc-card">
+              <span class="idx">01</span>
+              <h5>Site vitrine</h5>
+              <p>Une présence professionnelle qui inspire confiance pis fait sonner le téléphone.</p>
+              <a class="more" href="#">En savoir plus</a>
+            </div>
+            <div class="sec-head-sample">
+              <span class="eyebrow">Ce qu'on fait</span>
+              <h5>Trois façons de vous démarquer en ligne.</h5>
+              <div class="rule"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ——— LANE C ——— -->
+    <article class="lane lane-c">
+      <div class="lane-head">
+        <span class="lane-letter">C</span>
+        <div class="lane-title">
+          <h3>Quasi-neutre</h3>
+          <p>Presque pas d'accent : la typo, l'espace et l'italique font tout le travail. Le plus sophistiqué — et le plus exigeant.</p>
+        </div>
+      </div>
+      <div class="lane-body">
+        <div class="palette">
+          <span class="p-label">Palette</span>
+          <div class="row"><span class="dot" style="background:#4E4639;"></span><div><strong>Taupe encré</strong><span>#4E4639 — accent discret</span></div></div>
+          <div class="row"><span class="dot" style="background:#37312A;"></span><div><strong>Taupe profond</strong><span>#37312A — hover</span></div></div>
+          <div class="row"><span class="dot" style="background:#ECE6DB;"></span><div><strong>Lavis pierre</strong><span>#ECE6DB — fonds discrets</span></div></div>
+          <p class="usage">Ici l'accent est quasi invisible : boutons encrés, soulignés fins, italiques serif. Le contraste vient du noir et du vide.</p>
+        </div>
+        <div class="samples">
+          <div class="mini-hero">
+            <span class="eyebrow">Agence web · Estrie</span>
+            <h4>On bâtit des sites que vos clients ont <em>envie</em> d'utiliser.</h4>
+            <p class="sub">Des sites web sur mesure pour les entreprises de l'Estrie. Pas de template générique — des sites propres, rapides, pensés pour convertir.</p>
+            <div class="cta-row">
+              <a class="btn" href="#">Démarrer un projet <span class="arr">→</span></a>
+              <a class="link" href="#">Voir nos réalisations</a>
+            </div>
+          </div>
+          <div class="sample-duo">
+            <div class="svc-card">
+              <span class="idx">01</span>
+              <h5>Site vitrine</h5>
+              <p>Une présence professionnelle qui inspire confiance pis fait sonner le téléphone.</p>
+              <a class="more" href="#">En savoir plus</a>
+            </div>
+            <div class="sec-head-sample">
+              <span class="eyebrow">Ce qu'on fait</span>
+              <h5>Trois façons de vous démarquer en ligne.</h5>
+              <div class="rule"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ DÉCISION ═══════ -->
+  <section class="decide">
+    <span class="eyebrow">Ton choix</span>
+    <h2 class="doc-h2">Deux réponses, pis on lock.</h2>
+    <ul>
+      <li><span class="n">1.</span><span><strong>La lane d'accent :</strong> A (argile), B (encre bleue) ou C (quasi-neutre)?</span></li>
+      <li><span class="n">2.</span><span><strong>Le pairing typo :</strong> Fraunces + Hanken Grotesk, ou Instrument Serif + Instrument Sans?</span></li>
+    </ul>
+    <p class="doc-note" style="margin-top:28px;">Dès que c'est choisi, les tokens sont figés dans Tailwind et le build commence — fondation, pages, contenu, motion, SEO, QA, déploiement.</p>
+  </section>
+
+  <footer class="colophon">Web Estrie — Phase 0 · Directions visuelles · Document interne, non publié.</footer>
+
+</div>
+
+</body>
+</html>

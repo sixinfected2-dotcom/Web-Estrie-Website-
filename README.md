@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Estrie — webestrie.ca
 
-## Getting Started
+Site de l'agence Web Estrie. Next.js (App Router) + TypeScript + Tailwind v4 + Motion + Lenis.
 
-First, run the development server:
+## Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev       # http://localhost:3000
+npm run build     # build de production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Direction visuelle (verrouillée — Phase 0)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Lane C — quasi-neutre** : papier `#FAF6F0`, encre `#211C16`, accent taupe `#4E4639` discret.
+- **Typo** : Fraunces (titres) + Hanken Grotesk (texte), via `next/font`.
+- Tokens dans [app/globals.css](app/globals.css) (`@theme` Tailwind v4).
+- Le doc de Phase 0 est dans [docs/phase-0/direction-visuelle.html](docs/phase-0/direction-visuelle.html).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+- `app/` — pages (Accueil, Services, Réalisations, Approche, Contact, Blogue) + API contact + sitemap/robots/OG.
+- `components/ui|layout|motion|sections/` — primitives et sections.
+- `content/realisations/data.ts` — études de cas (données typées).
+- `content/blogue/*.mdx` + `lib/blogue.ts` — articles (MDX + registre typé).
+- `lib/data.ts` — config du site (courriel, Instagram, services, forfaits).
 
-To learn more about Next.js, take a look at the following resources:
+## Formulaire de contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Route `app/api/contact/route.ts` : validation Zod, honeypot, rate-limit basique, envoi via Resend.
+Copier `.env.example` → `.env.local` pis remplir `RESEND_API_KEY`. Sans clé, l'envoi est simulé en dev.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## À régler par Felix (placeholders prévus)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Prix des forfaits** — `lib/data.ts` → `forfaits[].priceFrom` (affiche « Sur demande » tant que null).
+2. **Lien Instagram exact** — `lib/data.ts` → `site.instagram`.
+3. **Courriel de contact** — `lib/data.ts` → `site.email` + variables d'env.
+4. **Nombre de pages du forfait vitrine** — `lib/data.ts` → « jusqu'à [X] pages ».
+5. **Metrics des études de cas** — `content/realisations/data.ts` → `metrics` (le bloc s'affiche automatiquement).
+6. **Témoignage client** (C&T Arbro idéalement) — slot commenté dans `app/page.tsx` (bloc 6).
+7. **Nom + photo** sur /approche — slot commenté dans `app/approche/page.tsx`.
+8. **Domaine** — acheter `webestrie.ca`, vérifier chez Resend pour l'envoi depuis le domaine.
