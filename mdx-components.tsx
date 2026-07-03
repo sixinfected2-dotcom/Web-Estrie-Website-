@@ -7,11 +7,13 @@ import Link from "next/link";
  */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    h2: (props) => (
-      <h2
-        className="text-heading mt-12 max-w-[30ch] text-ink first:mt-0"
-        {...props}
-      />
+    h2: ({ children, ...props }) => (
+      <div className="mt-12 first:mt-0">
+        <span aria-hidden className="block h-px w-8 bg-accent" />
+        <h2 className="text-heading mt-4 max-w-[30ch] text-ink" {...props}>
+          {children}
+        </h2>
+      </div>
     ),
     h3: (props) => (
       <h3
