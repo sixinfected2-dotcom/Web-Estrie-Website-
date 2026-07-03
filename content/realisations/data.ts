@@ -15,6 +15,10 @@ export type CaseStudy = {
   metrics: { value: string; label: string }[] | null;
   image: string;
   imageAlt: string;
+  /** Capture d'une section intérieure du site (variété visuelle). */
+  imageSecondary: string;
+  /** Capture mobile (390px) — pour les compositions navigateur + téléphone. */
+  imageMobile: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -39,6 +43,8 @@ export const caseStudies: CaseStudy[] = [
     metrics: null,
     image: "/images/realisations/poddrop.png",
     imageAlt: "Aperçu de la boutique en ligne PodDrop",
+    imageSecondary: "/images/realisations/poddrop-2.png",
+    imageMobile: "/images/realisations/poddrop-mobile.png",
   },
   {
     slug: "ct-arbro",
@@ -61,6 +67,8 @@ export const caseStudies: CaseStudy[] = [
     metrics: null,
     image: "/images/realisations/ct-arbro.png",
     imageAlt: "Aperçu du site vitrine C&T Arbro",
+    imageSecondary: "/images/realisations/ct-arbro-2.png",
+    imageMobile: "/images/realisations/ct-arbro-mobile.png",
   },
 ];
 
