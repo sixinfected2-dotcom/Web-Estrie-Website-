@@ -11,13 +11,18 @@ const items = [
 /**
  * Bandeau éditorial lent — CSS pur, pause au survol,
  * statique sous prefers-reduced-motion (géré dans globals.css).
+ * Les items alternent encre et argile pour donner du relief à la ligne.
  */
 export function Marquee() {
   const line = (
     <span className="marquee-chunk" aria-hidden>
-      {items.map((item) => (
+      {items.map((item, i) => (
         <span key={item} className="inline-flex items-baseline">
-          <span className="font-serif text-[clamp(20px,2.3vw,29px)] italic tracking-[-0.01em] text-ink/25">
+          <span
+            className={`font-serif text-[clamp(20px,2.3vw,29px)] italic tracking-[-0.01em] ${
+              i % 2 === 0 ? "text-ink/25" : "text-accent/40"
+            }`}
+          >
             {item}
           </span>
           <span className="mx-6 inline-block h-[7px] w-[7px] translate-y-[-4px] rounded-full bg-accent/50 md:mx-8" />

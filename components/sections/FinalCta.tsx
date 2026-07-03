@@ -14,8 +14,9 @@ type FinalCtaProps = {
 
 /**
  * CTA final pleine largeur en encre, registre éditorial aligné à gauche.
- * Le footer (bg-ink lui aussi) le prolonge — la page se termine ancrée
- * dans l'encre.
+ * En toile de fond, un seul mot serif fantôme — « Parlons-en. » — la
+ * seule occurrence de cet effet sur tout le site. Le footer (bg-ink lui
+ * aussi) le prolonge — la page se termine ancrée dans l'encre.
  */
 export function FinalCta({
   title,
@@ -24,10 +25,18 @@ export function FinalCta({
   instagram = false,
 }: FinalCtaProps) {
   return (
-    <section className="bg-ink">
-      <Container className="py-28 md:py-40">
+    <section className="relative overflow-hidden border-t border-paper/12 bg-ink">
+      {/* Mot fantôme — décor typographique, invisible aux lecteurs d'écran. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[0.18em] right-0 z-0 select-none whitespace-nowrap font-serif text-[clamp(7rem,22vw,19rem)] font-[440] italic leading-none tracking-[-0.03em] text-paper/[0.05]"
+      >
+        Parlons-en.
+      </span>
+      <Container className="relative z-10 py-28 md:py-40">
         <Reveal>
-          <h2 className="text-display max-w-[18ch] text-paper">{title}</h2>
+          <p className="text-eyebrow text-accent-bright">Prochaine étape</p>
+          <h2 className="text-display mt-6 max-w-[18ch] text-paper">{title}</h2>
           {body ? (
             <p className="text-lead mt-7 max-w-[48ch] text-paper/70">{body}</p>
           ) : null}
@@ -35,7 +44,7 @@ export function FinalCta({
             <Magnetic>
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[15px] font-semibold text-paper transition-colors duration-300 hover:bg-accent-bright"
+                className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[15px] font-semibold text-paper transition-colors duration-300 hover:bg-accent-bright"
               >
                 {cta}
                 <span
@@ -51,7 +60,7 @@ export function FinalCta({
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] font-semibold text-paper underline decoration-accent-bright/60 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-accent-bright"
+                className="inline-flex min-h-11 items-center text-[15px] font-semibold text-paper underline decoration-accent-bright/60 decoration-[1.5px] underline-offset-[5px] transition-colors hover:decoration-accent-bright"
               >
                 Nous écrire sur Instagram
               </a>
