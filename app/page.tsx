@@ -57,44 +57,6 @@ function CheckIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function MapPinIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`h-5 w-5 shrink-0 ${className}`}
-    >
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-function PenToolIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`h-5 w-5 shrink-0 ${className}`}
-    >
-      <path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z" />
-      <path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18" />
-      <path d="m2.3 2.3 7.286 7.286" />
-      <circle cx="11" cy="11" r="2" />
-    </svg>
-  );
-}
-
 /* ——— Données de composition (fragments fidèles du copy existant) ——— */
 
 const problemRows = [
@@ -102,8 +64,6 @@ const problemRows = [
   "Lent, pis qui dort",
   "Difficile à trouver sur Google",
 ];
-
-const complementIcons = [MapPinIcon, PenToolIcon];
 
 const approachPoints = [
   {
@@ -237,9 +197,9 @@ export default function Home() {
             </p>
           </Reveal>
 
-          {/* Le verdict, en rangées hairline — trois constats, une réponse. */}
+          {/* Le verdict — trois constats en filets, la réponse en pleine argile. */}
           <div className="lg:col-span-6 lg:self-center lg:pl-6">
-            <ul>
+            <ul className="border-b border-ink/10">
               {problemRows.map((row, i) => (
                 <Reveal key={row} delay={0.1 + i * 0.09}>
                   <li className="flex items-center gap-4 border-t border-ink/10 py-5 md:py-6">
@@ -252,9 +212,9 @@ export default function Home() {
               ))}
             </ul>
             <Reveal delay={0.1 + problemRows.length * 0.09}>
-              <div className="flex items-center gap-4 border-y border-ink/10 py-5 md:py-6">
-                <CheckIcon className="text-accent-deep" />
-                <p className="font-serif text-[19px] font-[460] italic leading-snug tracking-[-0.01em] text-ink md:text-[21px]">
+              <div className="mt-7 flex items-start gap-4 rounded-[20px] bg-accent p-7 md:mt-8 md:p-8">
+                <CheckIcon className="mt-[5px] text-paper" />
+                <p className="font-serif text-[clamp(20px,1.9vw,24px)] font-[440] italic leading-[1.35] tracking-[-0.012em] text-paper">
                   Bâti à la main, à partir de votre réalité.
                 </p>
               </div>
@@ -281,28 +241,40 @@ export default function Home() {
             </Button>
           </Reveal>
         </div>
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        {/* Le sommaire en registre — rangées pleine largeur, numéral serif
+            géant qui s'allume à l'argile au survol. Même langage que les
+            index de /services, zéro carte. */}
+        <div className="mt-14 border-b border-hairline md:mt-16">
           {services.map((service, i) => (
-            <Reveal key={service.slug} delay={i * 0.09} className="h-full">
+            <Reveal key={service.slug} delay={i * 0.07}>
               <Link
                 href={`/services#${service.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-hairline bg-paper-raised p-8 transition-all duration-300 ease-editorial hover:-translate-y-1 hover:border-accent/45"
+                className="group grid items-center gap-x-8 gap-y-4 border-t border-hairline py-9 md:grid-cols-12 md:py-12"
               >
-                <span className="font-serif text-[30px] italic leading-none text-accent">
+                <span
+                  aria-hidden
+                  className="font-serif text-[clamp(46px,5.4vw,76px)] font-[400] italic leading-[0.85] tracking-[-0.02em] text-accent/[0.18] transition-colors duration-500 ease-editorial group-hover:text-accent md:col-span-2"
+                >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-heading mt-4 text-ink">{service.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-                  {service.short}
-                </p>
-                <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-hairline pt-6">
+                <div className="md:col-span-5 md:pr-6">
+                  <h3 className="font-serif text-[clamp(24px,2.5vw,31px)] font-[440] tracking-[-0.014em] text-ink transition-colors duration-300 group-hover:text-accent-deep">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2.5 max-w-[40ch] text-[15px] leading-relaxed text-ink-soft">
+                    {service.short}
+                  </p>
+                </div>
+                <ul className="hidden md:col-span-4 md:block">
                   {service.included
                     .filter((item) => !item.includes("["))
                     .slice(0, 3)
-                    .map((item) => (
+                    .map((item, j) => (
                       <li
                         key={item}
-                        className="flex items-baseline gap-3 text-[14px] leading-snug text-ink-soft"
+                        className={`flex items-baseline gap-3 py-[7px] text-[13.5px] leading-snug text-ink-soft ${
+                          j > 0 ? "border-t border-hairline/70" : ""
+                        }`}
                       >
                         <span
                           aria-hidden
@@ -312,46 +284,37 @@ export default function Home() {
                       </li>
                     ))}
                 </ul>
-                <span className="mt-7 inline-flex min-h-6 items-center gap-2 text-[14px] font-semibold text-ink underline decoration-accent decoration-2 underline-offset-[5px] transition-colors group-hover:text-accent-deep">
-                  En savoir plus
-                  <span
-                    aria-hidden
-                    className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
+                <span
+                  aria-hidden
+                  className="hidden text-[24px] leading-none text-ink-soft/60 transition-all duration-300 ease-editorial group-hover:translate-x-1.5 group-hover:text-accent md:col-span-1 md:block md:justify-self-end"
+                >
+                  →
                 </span>
               </Link>
             </Reveal>
           ))}
         </div>
 
-        {/* Bande « Aussi inclus » — les compléments, en tuiles sable. */}
-        <div className="mt-12 md:mt-14">
+        {/* Les compléments — une ligne typographique, sans tuiles. */}
+        <div className="mt-9 flex flex-col gap-x-14 gap-y-5 md:mt-10 lg:flex-row lg:items-baseline">
           <Reveal>
-            <p className="text-eyebrow text-ink-soft">Aussi inclus</p>
+            <p className="text-eyebrow shrink-0 text-ink-soft">Aussi inclus</p>
           </Reveal>
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            {complements.map((complement, i) => {
-              const Icon = complementIcons[i] ?? MapPinIcon;
-              return (
-                <Reveal key={complement.title} delay={0.08 + i * 0.09}>
-                  <div className="flex items-start gap-5 rounded-2xl bg-wash p-6 md:p-7">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-paper text-accent-deep">
-                      <Icon />
-                    </span>
-                    <div>
-                      <h3 className="font-serif text-[19px] font-[460] tracking-[-0.01em] text-ink">
-                        {complement.title}
-                      </h3>
-                      <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-soft">
-                        {complement.body}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
+          <div className="flex flex-col gap-x-14 gap-y-5 md:flex-row">
+            {complements.map((complement, i) => (
+              <Reveal key={complement.title} delay={0.08 + i * 0.08}>
+                <p className="max-w-[44ch] text-[14.5px] leading-relaxed text-ink-soft">
+                  <span className="font-serif text-[17px] font-[460] italic tracking-[-0.01em] text-ink">
+                    {complement.title}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="mx-3 inline-block h-[5px] w-[5px] translate-y-[-2px] rounded-full bg-accent"
+                  />
+                  {complement.body}
+                </p>
+              </Reveal>
+            ))}
           </div>
         </div>
 

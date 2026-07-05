@@ -19,7 +19,7 @@ export function PhoneFrame({
 }: PhoneFrameProps) {
   return (
     <div
-      className={`overflow-hidden rounded-[26px] bg-ink p-[6px] shadow-[0_30px_60px_-30px_rgba(36,26,18,0.5)] ${className}`}
+      className={`overflow-hidden rounded-[26px] bg-ink p-[6px] shadow-[0_30px_60px_-30px_rgba(36,26,18,0.5)] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-editorial motion-safe:group-hover:-translate-y-2 ${className}`}
     >
       <div className="relative aspect-[390/800] overflow-hidden rounded-[20px] bg-wash">
         <Image

@@ -212,31 +212,37 @@ export default function ServicesPage() {
           title="Un prix clair, avant de commencer."
           lead="Pas de soumission mystère : des forfaits à portée définie, pis vous savez toujours à quoi vous attendre avant qu'on parte le projet."
         />
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        {/* Registre éditorial — un forfait par rangée, filets hairline.
+            Le prix reste tel quel (« Sur demande » tant que non tranché). */}
+        <div className="mt-14 border-b border-hairline">
           {forfaits.map((forfait, i) => (
-            <Reveal key={forfait.name} delay={i * 0.09} className="h-full">
-              <div
-                className={`flex h-full flex-col rounded-2xl border bg-paper-raised p-8 ${
-                  i === 1 ? "border-accent/45" : "border-hairline"
-                }`}
-              >
-                <Eyebrow>{forfait.service}</Eyebrow>
-                <h3 className="text-heading mt-4 text-ink">{forfait.name}</h3>
-                <p className="mt-2 font-serif text-[24px] font-[440] tracking-[-0.01em] text-ink">
-                  {forfait.priceFrom ? (
-                    <>
-                      À partir de{" "}
-                      <span className="text-accent">{forfait.priceFrom}</span>
-                    </>
-                  ) : (
-                    <span className="italic">Sur demande</span>
-                  )}
-                </p>
-                <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-hairline pt-6">
+            <Reveal key={forfait.name} delay={i * 0.06}>
+              <article className="grid gap-x-10 gap-y-6 border-t border-hairline py-10 md:grid-cols-12 md:py-12">
+                <div className="md:col-span-4">
+                  <Eyebrow>{forfait.service}</Eyebrow>
+                  <h3 className="mt-3 font-serif text-[clamp(26px,2.8vw,34px)] font-[430] tracking-[-0.015em] text-ink">
+                    {forfait.name}
+                  </h3>
+                  <p className="mt-2 font-serif text-[19px] font-[440] tracking-[-0.01em] text-ink md:text-[20px]">
+                    {forfait.priceFrom ? (
+                      <>
+                        À partir de{" "}
+                        <span className="text-accent-deep">
+                          {forfait.priceFrom}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="italic text-accent-deep">
+                        Sur demande
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <ul className="content-start gap-x-8 gap-y-2.5 sm:grid sm:grid-cols-2 md:col-span-5 md:pt-2">
                   {forfait.features.map((f) => (
                     <li
                       key={f}
-                      className="flex items-baseline gap-3 text-[15px] leading-relaxed text-ink"
+                      className="flex items-baseline gap-3 py-1 text-[15px] leading-relaxed text-ink sm:py-0"
                     >
                       <span
                         aria-hidden
@@ -246,7 +252,7 @@ export default function ServicesPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 border-t border-hairline pt-6">
+                <div className="md:col-span-3 md:justify-self-end md:pt-2">
                   <Link
                     href="/contact"
                     className="group inline-flex min-h-[44px] items-center gap-2 text-[15px] font-semibold text-ink underline decoration-accent decoration-[1.5px] underline-offset-[5px] transition-colors hover:text-accent"
@@ -260,7 +266,7 @@ export default function ServicesPage() {
                     </span>
                   </Link>
                 </div>
-              </div>
+              </article>
             </Reveal>
           ))}
         </div>
