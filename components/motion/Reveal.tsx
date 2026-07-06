@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { useIntroReady } from "../intro/IntroGate";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -14,17 +16,25 @@ type RevealProps = {
 
 export function Reveal({ children, className, delay = 0, y = 20 }: RevealProps) {
   const reduceMotion = useReducedMotion();
+  const ready = useIntroReady();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12% 0px" });
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
+  // Pendant l'intro (accueil), l'entrée reste masquée : elle démarre
+  // quand le gate bascule, avec son délai propre.
+  const shown = ready && inView;
+
   return (
     <motion.div
+      ref={ref}
+      data-reveal
       className={className}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-12% 0px" }}
+      animate={shown ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{ duration: 0.6, delay, ease: EASE }}
     >
       {children}

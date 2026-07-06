@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
+import { ProgressHairline } from "@/components/motion/ProgressHairline";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { posts, getPost, formatDate } from "@/lib/blogue";
 
@@ -39,6 +40,9 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <>
       <article>
+        {/* Le filet de lecture — la seule barre de progression du site. */}
+        <ProgressHairline />
+
         {/* ——— En-tête d'article ——— */}
         <header className="pt-[72px]">
           <Container className="pb-10 pt-20 md:pb-12 md:pt-28">
@@ -74,8 +78,10 @@ export default async function ArticlePage({ params }: Props) {
 
         {/* ——— Corps de l'article — largeur de lecture ——— */}
         <Container className="pb-20 md:pb-28">
+          {/* La lettrine (CSS pur) exige que le premier <p> soit un
+              enfant direct du conteneur `.lettrine`. */}
           <Reveal delay={0.1}>
-            <div className="max-w-[700px] border-t border-hairline pt-10 md:pt-12">
+            <div className="lettrine max-w-[700px] border-t border-hairline pt-10 md:pt-12">
               <Content />
             </div>
           </Reveal>

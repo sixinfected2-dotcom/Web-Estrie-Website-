@@ -19,10 +19,36 @@ const budgets = [
   "Je ne sais pas encore",
 ] as const;
 
-const inputClass =
-  "w-full rounded-xl border border-hairline bg-paper-raised px-4 py-3.5 text-[15.5px] text-ink placeholder:text-ink-soft/60 transition-colors focus:border-accent focus:outline-none focus-visible:outline-none";
+/* La lettre : champs sur filet. Au focus, le filet inférieur passe
+   hairline → accent — un trait qui se trace (CSS pur, motion-safe). */
+const fieldShell =
+  "relative border-b border-hairline after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-px after:origin-left after:scale-x-0 after:bg-accent after:content-[''] focus-within:after:scale-x-100 motion-safe:after:transition-transform motion-safe:after:duration-[250ms] motion-safe:after:ease-editorial";
 
-const labelClass = "mb-2 block text-[14px] font-semibold text-ink";
+/* Pas de suppression d'outline ici : l'anneau :focus-visible global
+   (globals.css, accent 2px) reste l'indicateur clavier — WCAG 2.4.7.
+   Le filet accent du fieldShell l'accompagne au focus-within. */
+const inputClass =
+  "w-full bg-transparent px-0 pb-3.5 pt-1 text-[16px] text-ink placeholder:text-ink-soft/50";
+
+const labelClass =
+  "mb-1.5 block text-[11.5px] font-semibold uppercase tracking-[0.15em] text-ink-soft";
+
+function ChevronIcon() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="pointer-events-none absolute right-0 top-[9px] h-4 w-4 text-ink-soft"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -64,14 +90,11 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div
-        role="status"
-        className="rounded-2xl border border-hairline bg-paper-raised p-10 text-center"
-      >
-        <p className="font-serif text-[26px] font-[440] tracking-[-0.01em] text-ink">
+      <div role="status" className="border-y border-hairline py-12">
+        <p className="font-serif text-[clamp(26px,3vw,34px)] font-[430] tracking-[-0.014em] text-ink">
           Message reçu<span className="text-accent">.</span>
         </p>
-        <p className="mx-auto mt-3 max-w-[40ch] text-[15.5px] leading-relaxed text-ink-soft">
+        <p className="mt-3 max-w-[44ch] text-[15.5px] leading-relaxed text-ink-soft">
           Merci! On regarde votre projet pis on vous revient vite avec un plan
           clair.
         </p>
@@ -80,76 +103,88 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate={false} className="flex flex-col gap-6">
-      <div className="grid gap-6 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} noValidate={false} className="flex flex-col gap-9">
+      <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
         <div>
           <label htmlFor="nom" className={labelClass}>
             Nom
           </label>
-          <input
-            id="nom"
-            name="nom"
-            type="text"
-            required
-            minLength={2}
-            autoComplete="name"
-            placeholder="Votre nom"
-            className={inputClass}
-          />
+          <div className={fieldShell}>
+            <input
+              id="nom"
+              name="nom"
+              type="text"
+              required
+              minLength={2}
+              autoComplete="name"
+              placeholder="Votre nom"
+              className={inputClass}
+            />
+          </div>
         </div>
         <div>
           <label htmlFor="courriel" className={labelClass}>
             Courriel
           </label>
-          <input
-            id="courriel"
-            name="courriel"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="vous@entreprise.ca"
-            className={inputClass}
-          />
+          <div className={fieldShell}>
+            <input
+              id="courriel"
+              name="courriel"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="vous@entreprise.ca"
+              className={inputClass}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
         <div>
           <label htmlFor="typeProjet" className={labelClass}>
             Type de projet
           </label>
-          <select
-            id="typeProjet"
-            name="typeProjet"
-            required
-            defaultValue="Site vitrine"
-            className={inputClass}
-          >
-            {projectTypes.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+          <div className={fieldShell}>
+            <select
+              id="typeProjet"
+              name="typeProjet"
+              required
+              defaultValue="Site vitrine"
+              className={`${inputClass} appearance-none pr-8`}
+            >
+              {projectTypes.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <ChevronIcon />
+          </div>
         </div>
         <div>
           <label htmlFor="budget" className={labelClass}>
             Budget approximatif{" "}
-            <span className="font-normal text-ink-soft">(optionnel)</span>
+            <span className="font-normal normal-case tracking-normal text-ink-soft/80">
+              (optionnel)
+            </span>
           </label>
-          <select
-            id="budget"
-            name="budget"
-            defaultValue=""
-            className={inputClass}
-          >
-            <option value="">À discuter</option>
-            {budgets.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+          <div className={fieldShell}>
+            <select
+              id="budget"
+              name="budget"
+              defaultValue=""
+              className={`${inputClass} appearance-none pr-8`}
+            >
+              <option value="">À discuter</option>
+              {budgets.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </select>
+            <ChevronIcon />
+          </div>
         </div>
       </div>
 
@@ -157,15 +192,17 @@ export function ContactForm() {
         <label htmlFor="message" className={labelClass}>
           Message
         </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          minLength={10}
-          rows={6}
-          placeholder="Parlez-nous de votre entreprise pis de ce que vous avez en tête."
-          className={`${inputClass} resize-y`}
-        />
+        <div className={fieldShell}>
+          <textarea
+            id="message"
+            name="message"
+            required
+            minLength={10}
+            rows={6}
+            placeholder="Parlez-nous de votre entreprise pis de ce que vous avez en tête."
+            className={`${inputClass} resize-y pt-2`}
+          />
+        </div>
       </div>
 
       {/* Honeypot — invisible pour les humains, irrésistible pour les bots. */}
@@ -183,7 +220,7 @@ export function ContactForm() {
       {status === "error" ? (
         <p
           role="alert"
-          className="rounded-xl bg-wash px-4 py-3 text-[14.5px] font-medium text-ink"
+          className="border-l-2 border-accent-deep bg-wash px-4 py-3 text-[14.5px] font-medium text-ink"
         >
           {errorMessage}
         </p>

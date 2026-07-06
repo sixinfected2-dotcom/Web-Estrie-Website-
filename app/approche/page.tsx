@@ -3,6 +3,8 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
+import { CharRise } from "@/components/motion/CharRise";
+import { ApproachRail } from "@/components/sections/approche/ApproachRail";
 
 export const metadata: Metadata = {
   title: "Approche — Une agence d'ici, pour les entreprises d'ici",
@@ -41,7 +43,7 @@ export default function ApprochePage() {
         meta="Sherbrooke · Estrie — Sites sur mesure, SEO local"
       />
 
-      {/* ——— Bloc 2 — Le process — timeline verticale ——— */}
+      {/* ——— Bloc 2 — Le process — le rail qui se trace à la lecture ——— */}
       <Section>
         <div className="grid gap-12 md:grid-cols-12 md:gap-16">
           <div className="md:col-span-5">
@@ -52,38 +54,9 @@ export default function ApprochePage() {
               />
             </div>
           </div>
-          <ol className="flex flex-col md:col-span-7">
-            {processSteps.map((step, i) => (
-              <Reveal key={step.title} delay={i * 0.08}>
-                <li className="relative flex gap-7 pb-12 pl-1 last:pb-0 md:gap-9">
-                  {/* Rail + nœud argile */}
-                  <span
-                    aria-hidden
-                    className="relative flex w-[11px] shrink-0 justify-center"
-                  >
-                    {i < processSteps.length - 1 ? (
-                      <span className="absolute bottom-[-14px] top-[26px] w-px bg-hairline" />
-                    ) : null}
-                    <span className="mt-[7px] h-[11px] w-[11px] rounded-full border-[2.5px] border-accent bg-paper" />
-                  </span>
-                  <div>
-                    <span
-                      aria-hidden
-                      className="font-serif text-[19px] italic leading-none text-accent"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="mt-3 font-serif text-[22px] font-[460] tracking-[-0.01em] text-ink md:text-[24px]">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-relaxed text-ink-soft">
-                      {step.body}
-                    </p>
-                  </div>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+          <div className="md:col-span-7">
+            <ApproachRail points={processSteps} />
+          </div>
         </div>
       </Section>
 
@@ -118,10 +91,14 @@ export default function ApprochePage() {
               >
                 <path d="M0 34V21.4C0 15.5 1.3 10.9 4 7.5 6.7 4.1 10.8 1.6 16.3 0l2.9 5.6c-3.6 1.2-6.2 2.8-7.8 4.8-1.5 2-2.3 4.3-2.4 7H19V34H0Zm25 0V21.4c0-5.9 1.3-10.5 4-13.9C31.7 4.1 35.8 1.6 41.3 0l2.9 5.6c-3.6 1.2-6.2 2.8-7.8 4.8-1.5 2-2.3 4.3-2.4 7H44V34H25Z" />
               </svg>
+              {/* Le pull-quote — le seul moment kinetic de la page :
+                  « zéro détour » se compose caractère par caractère. */}
               <blockquote className="mt-8 md:mt-10">
-                <p className="max-w-[24ch] font-serif text-[24px] font-[440] italic leading-[1.25] tracking-[-0.014em] text-ink md:text-[28px] lg:text-[30px]">
-                  Accès direct, soin personnel, zéro détour — c&rsquo;est ça,
-                  travailler avec une agence à échelle humaine.
+                <p className="max-w-[22ch] font-serif text-[clamp(28px,3vw,40px)] font-[440] italic leading-[1.22] tracking-[-0.014em] text-ink">
+                  Accès direct, soin personnel,{" "}
+                  <CharRise text="zéro détour" className="text-accent-deep" />{" "}
+                  — c&rsquo;est ça, travailler avec une agence à échelle
+                  humaine.
                 </p>
               </blockquote>
               <figcaption className="text-eyebrow mt-9 flex items-center gap-3 border-t border-hairline pt-5 text-ink-soft md:mt-11">

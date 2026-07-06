@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
 import { Fragment } from "react";
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
 import { Section, SectionHeader, Eyebrow } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { BrowserFrame } from "@/components/ui/BrowserFrame";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
-import { Marquee } from "@/components/ui/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
-import { TextReveal } from "@/components/motion/TextReveal";
 import { Magnetic } from "@/components/motion/MagneticButton";
+import { CharRise } from "@/components/motion/CharRise";
+import { RuleDraw } from "@/components/motion/RuleDraw";
+import { ScrollNumeral } from "@/components/motion/ScrollNumeral";
+import { UnderlineDraw } from "@/components/motion/UnderlineDraw";
+import { VelocityMarquee } from "@/components/motion/VelocityMarquee";
 import { CaseStudyRow } from "@/components/sections/CaseStudyRow";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { ApproachRail } from "@/components/sections/approche/ApproachRail";
+import { HeroStage } from "@/components/sections/home/HeroStage";
+import { HeroTitle } from "@/components/sections/home/HeroTitle";
+import { ConstatVerdict } from "@/components/sections/home/ConstatVerdict";
+import { SlideNumeral } from "@/components/sections/home/SlideNumeral";
 import { caseStudies } from "@/content/realisations/data";
 import { services, complements } from "@/lib/data";
 
@@ -21,24 +28,6 @@ export const metadata: Metadata = {
 };
 
 /* ——— Icônes SVG inline — famille Lucide, stroke 1.5 ——— */
-
-function CrossIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`h-[18px] w-[18px] shrink-0 ${className}`}
-    >
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </svg>
-  );
-}
 
 function CheckIcon({ className = "" }: { className?: string }) {
   return (
@@ -87,99 +76,104 @@ const approachPoints = [
 export default function Home() {
   return (
     <>
-      {/* ——— Bloc 1 — Hero : le pitch à gauche, le travail réel à droite ——— */}
-      <section className="pt-[72px]">
-        <Container className="flex min-h-[86svh] flex-col justify-center py-20 md:py-24">
-          <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-6">
-              <Reveal y={0}>
-                <Eyebrow>Agence web · Estrie</Eyebrow>
-              </Reveal>
-              <TextReveal
-                as="h1"
-                className="mt-6 font-serif text-[clamp(2.7rem,5.1vw,4.9rem)] font-[400] leading-[1.02] tracking-[-0.026em] text-ink [font-variation-settings:'opsz'_130]"
-                delay={0.1}
-                lines={[
-                  <Fragment key="l1">On bâtit des sites</Fragment>,
-                  <Fragment key="l2">que vos clients ont</Fragment>,
-                  <Fragment key="l3">
-                    <em className="italic text-accent">envie</em>
-                    {" d’utiliser."}
-                  </Fragment>,
-                ]}
-              />
-              <Reveal delay={0.5} y={14}>
-                <p className="text-lead mt-7 max-w-[46ch] text-ink-soft">
-                  Des sites web sur mesure pour les entreprises de
-                  l&rsquo;Estrie. Pas de template générique — des sites
-                  propres, rapides, pensés pour convertir.
-                </p>
-              </Reveal>
-              <Reveal delay={0.62} y={14}>
-                <div className="mt-9 flex flex-wrap items-center gap-7">
-                  <Magnetic>
-                    <Button href="/contact">Démarrer un projet</Button>
-                  </Magnetic>
-                  <Button href="/realisations" variant="link">
-                    Voir nos réalisations
-                  </Button>
-                </div>
-                <p className="mt-6 flex items-center gap-2.5 text-[13.5px] font-medium text-ink-soft">
-                  <span
-                    aria-hidden
-                    className="inline-block h-[7px] w-[7px] rounded-full bg-accent"
-                  />
-                  On vous répond vite, sans engagement.
-                </p>
-              </Reveal>
-            </div>
-
-            {/* Le travail réel, dès la première seconde — duo desktop + mobile. */}
-            <Reveal delay={0.35} y={26} className="lg:col-span-6">
-              <div className="group relative mb-14 md:mb-16">
-                <div
-                  aria-hidden
-                  className="absolute -inset-5 -z-10 rounded-[30px] bg-wash md:-inset-8"
-                />
-                <BrowserFrame
-                  src="/images/realisations/poddrop.png"
-                  alt="Boutique en ligne PodDrop — réalisation Web Estrie"
-                  url="poddrop.ca"
-                  priority
-                  sizes="(min-width: 1024px) 46vw, 100vw"
-                />
-                <PhoneFrame
-                  src="/images/realisations/ct-arbro-mobile.png"
-                  alt="Site vitrine C&T Arbro sur mobile — réalisation Web Estrie"
-                  sizes="(min-width: 1024px) 12vw, 28vw"
-                  className="absolute -bottom-14 left-0 w-[28%] max-w-[172px] md:-left-8"
-                />
-              </div>
+      {/* ——— Bloc 1 — Hero : le pitch à gauche, le travail réel à droite.
+          Les entrées attendent la fin de l'intro (gate interne des
+          primitives) ; au défilement, l'épreuve part à l'impression. ——— */}
+      <HeroStage
+        intro={
+          <Reveal y={0}>
+            <Eyebrow>Agence web · Estrie</Eyebrow>
+          </Reveal>
+        }
+        heading={
+          <HeroTitle
+            className="mt-6 font-serif text-[clamp(2.7rem,5.1vw,4.9rem)] font-[400] leading-[1.02] tracking-[-0.026em] text-ink [font-variation-settings:'opsz'_130]"
+            delay={0.1}
+            lines={[
+              <Fragment key="l1">On bâtit des sites</Fragment>,
+              <Fragment key="l2">que vos clients ont</Fragment>,
+              <Fragment key="l3">
+                <UnderlineDraw delay={1.2}>
+                  <em className="italic text-accent">envie</em>
+                </UnderlineDraw>
+                {" d’utiliser."}
+              </Fragment>,
+            ]}
+          />
+        }
+        body={
+          <>
+            <Reveal delay={0.5} y={14}>
+              <p className="text-lead mt-7 max-w-[46ch] text-ink-soft">
+                Des sites web sur mesure pour les entreprises de
+                l&rsquo;Estrie. Pas de template générique — des sites
+                propres, rapides, pensés pour convertir.
+              </p>
             </Reveal>
+            <Reveal delay={0.62} y={14}>
+              <div className="mt-9 flex flex-wrap items-center gap-7">
+                <Magnetic>
+                  <Button href="/contact">Démarrer un projet</Button>
+                </Magnetic>
+                <Button href="/realisations" variant="link">
+                  Voir nos réalisations
+                </Button>
+              </div>
+              <p className="mt-6 flex items-center gap-2.5 text-[13.5px] font-medium text-ink-soft">
+                <span
+                  aria-hidden
+                  className="inline-block h-[7px] w-[7px] rounded-full bg-accent"
+                />
+                On vous répond vite, sans engagement.
+              </p>
+            </Reveal>
+          </>
+        }
+        frames={
+          /* Le travail réel, dès la première seconde — duo desktop + mobile.
+             Non gaté : l'image LCP est peinte au premier rendu ; c'est la levée
+             du voile d'intro qui la révèle, pas un fondu qui la retarde. */
+          <div className="group relative mb-14 md:mb-16">
+            <div
+              aria-hidden
+              className="absolute -inset-5 -z-10 rounded-[30px] bg-wash md:-inset-8"
+            />
+            <BrowserFrame
+              src="/images/realisations/poddrop.png"
+              alt="Boutique en ligne PodDrop — réalisation Web Estrie"
+              url="poddrop.ca"
+              priority
+              sizes="(min-width: 1024px) 46vw, 100vw"
+            />
+            <PhoneFrame
+              src="/images/realisations/ct-arbro-mobile.png"
+              alt="Site vitrine C&T Arbro sur mobile — réalisation Web Estrie"
+              sizes="(min-width: 1024px) 12vw, 28vw"
+              className="absolute -bottom-14 left-0 w-[28%] max-w-[172px] md:-left-8"
+            />
           </div>
-
+        }
+        footer={
           <Reveal delay={0.8} y={10}>
             <p className="text-eyebrow mt-16 flex items-center gap-3 border-t border-hairline pt-5 text-ink-soft">
               <span aria-hidden className="inline-block h-2 w-2 bg-accent" />
               Sherbrooke · Estrie — Sites sur mesure, SEO local
             </p>
           </Reveal>
-        </Container>
-      </section>
+        }
+      />
 
-      {/* ——— Bandeau éditorial ——— */}
-      <Marquee />
+      {/* ——— Bandeau éditorial — la vélocité du scroll le cisaille. ——— */}
+      <VelocityMarquee />
 
-      {/* ——— Bloc 2 — Le constat — respiration sable, verdict en filets ——— */}
+      {/* ——— Bloc 2 — Le constat — respiration sable, le correcteur passe ——— */}
       <Section tone="wash" rule={false} className="py-24 md:py-32">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
-            <span
-              aria-hidden
-              className="block font-serif text-[clamp(56px,7vw,92px)] font-[400] italic leading-none text-accent/25"
-            >
-              01
-            </span>
+            <ScrollNumeral
+              value="01"
+              className="text-[clamp(56px,7vw,92px)] font-[400] text-accent"
+            />
             <p className="text-eyebrow mt-8 text-accent-deep">Le problème</p>
             <h2 className="text-title mt-4 text-ink">
               Un beau site, c&rsquo;est bien. Un site qui{" "}
@@ -197,34 +191,29 @@ export default function Home() {
             </p>
           </Reveal>
 
-          {/* Le verdict — trois constats en filets, la réponse en pleine argile. */}
+          {/* Le verdict — trois constats biffés à l'épreuve, la réponse
+              tamponnée en pleine argile. */}
           <div className="lg:col-span-6 lg:self-center lg:pl-6">
-            <ul className="border-b border-ink/10">
-              {problemRows.map((row, i) => (
-                <Reveal key={row} delay={0.1 + i * 0.09}>
-                  <li className="flex items-center gap-4 border-t border-ink/10 py-5 md:py-6">
-                    <CrossIcon className="text-accent" />
-                    <p className="text-[16px] font-medium leading-snug text-ink-soft md:text-[17px]">
-                      {row}
-                    </p>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-            <Reveal delay={0.1 + problemRows.length * 0.09}>
-              <div className="mt-7 flex items-start gap-4 rounded-[20px] bg-accent p-7 md:mt-8 md:p-8">
-                <CheckIcon className="mt-[5px] text-paper" />
-                <p className="font-serif text-[clamp(20px,1.9vw,24px)] font-[440] italic leading-[1.35] tracking-[-0.012em] text-paper">
-                  Bâti à la main, à partir de votre réalité.
-                </p>
-              </div>
-            </Reveal>
+            <ConstatVerdict
+              rows={problemRows}
+              panel={
+                <div className="flex items-start gap-4 rounded-[20px] bg-accent p-7 md:p-8">
+                  <CheckIcon className="mt-[5px] text-paper" />
+                  <p className="font-serif text-[clamp(20px,1.9vw,24px)] font-[440] italic leading-[1.35] tracking-[-0.012em] text-paper">
+                    Bâti à la main, à partir de votre réalité.
+                  </p>
+                </div>
+              }
+            />
           </div>
         </div>
       </Section>
 
+      {/* La règle — la ponctuation du retour au papier. */}
+      <RuleDraw className="h-px w-full bg-hairline" />
+
       {/* ——— Bloc 3 — Aperçu des services ——— */}
-      <Section>
+      <Section rule={false}>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
             eyebrow="Ce qu'on fait"
@@ -242,8 +231,9 @@ export default function Home() {
           </Reveal>
         </div>
         {/* Le sommaire en registre — rangées pleine largeur, numéral serif
-            géant qui s'allume à l'argile au survol. Même langage que les
-            index de /services, zéro carte. */}
+            géant qui se cale dans le composteur à l'entrée pis s'allume à
+            l'argile au survol — le survol penche aussi le caractère (WONK).
+            Même langage que les index de /services, zéro carte. */}
         <div className="mt-14 border-b border-hairline md:mt-16">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={i * 0.07}>
@@ -251,14 +241,14 @@ export default function Home() {
                 href={`/services#${service.slug}`}
                 className="group grid items-center gap-x-8 gap-y-4 border-t border-hairline py-9 md:grid-cols-12 md:py-12"
               >
-                <span
-                  aria-hidden
+                <SlideNumeral
+                  delay={0.1 + i * 0.07}
                   className="font-serif text-[clamp(46px,5.4vw,76px)] font-[400] italic leading-[0.85] tracking-[-0.02em] text-accent/[0.18] transition-colors duration-500 ease-editorial group-hover:text-accent md:col-span-2"
                 >
                   {String(i + 1).padStart(2, "0")}
-                </span>
+                </SlideNumeral>
                 <div className="md:col-span-5 md:pr-6">
-                  <h3 className="font-serif text-[clamp(24px,2.5vw,31px)] font-[440] tracking-[-0.014em] text-ink transition-colors duration-300 group-hover:text-accent-deep">
+                  <h3 className="wonk-hover font-serif text-[clamp(24px,2.5vw,31px)] font-[440] tracking-[-0.014em] text-ink transition-colors duration-300 [--wonk-opsz:32] [font-variation-settings:'opsz'_32] group-hover:text-accent-deep">
                     {service.title}
                   </h3>
                   <p className="mt-2.5 max-w-[40ch] text-[15px] leading-relaxed text-ink-soft">
@@ -325,7 +315,8 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* ——— Bloc 4 — Aperçu des réalisations — le travail en grand ——— */}
+      {/* ——— Bloc 4 — Aperçu des réalisations — le travail en grand,
+          mis en profondeur par la parallaxe différentielle ——— */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
@@ -357,7 +348,8 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* ——— Bloc 5 — Aperçu de l'approche — rail connecté + panneau sable ——— */}
+      {/* ——— Bloc 5 — Aperçu de l'approche — le trait se trace au rythme
+          de la lecture, les nœuds argile tamponnent au passage ——— */}
       <Section>
         <SectionHeader
           eyebrow="Notre approche"
@@ -369,33 +361,10 @@ export default function Home() {
           }
         />
         <div className="mt-14 grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
-          {/* Le fil de la méthode — rail hairline, nœuds argile. */}
-          <ol className="lg:col-span-7">
-            {approachPoints.map((point, i) => (
-              <Reveal key={point.title} delay={i * 0.08}>
-                <li className="relative ml-1 border-l border-hairline pb-11 pl-8 last:pb-0 md:pl-10">
-                  <span
-                    aria-hidden
-                    className="absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full bg-accent"
-                  />
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                    <span
-                      aria-hidden
-                      className="font-serif text-[22px] italic leading-none text-accent-deep"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-serif text-[22px] font-[460] tracking-[-0.01em] text-ink">
-                      {point.title}
-                    </h3>
-                  </div>
-                  <p className="mt-2.5 max-w-[46ch] text-[15px] leading-relaxed text-ink-soft">
-                    {point.body}
-                  </p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+          {/* Le fil de la méthode — rail progressif partagé avec /approche. */}
+          <div className="lg:col-span-7">
+            <ApproachRail points={approachPoints} />
+          </div>
 
           {/* Le différenciateur — panneau sable, collant au défilement. */}
           <Reveal delay={0.15} className="lg:sticky lg:top-28 lg:col-span-5">
@@ -425,12 +394,12 @@ export default function Home() {
         Slot prévu pour un vrai quote client (idéalement C&T Arbro) — jamais de faux témoignage.
       */}
 
-      {/* ——— Bloc 7 — CTA final ——— */}
+      {/* ——— Bloc 7 — CTA final — le mot qui monte, puis fleurit ——— */}
       <FinalCta
         title={
           <>
             Prêt à donner à votre entreprise le site qu&rsquo;elle{" "}
-            <em className="italic text-accent-bright">mérite</em>?
+            <CharRise text="mérite" bloom className="italic text-accent-bright" />?
           </>
         }
         body="Parlez-nous de votre projet. On vous répond vite, sans engagement."

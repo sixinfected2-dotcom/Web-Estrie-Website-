@@ -3,8 +3,9 @@ import Link from "next/link";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Section, SectionHeader, Eyebrow } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
+import { ServicesAnchorNav } from "@/components/sections/services/ServicesAnchorNav";
+import { ServiceArticle } from "@/components/sections/services/ServiceArticle";
 import { services, complements, forfaits } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -63,120 +64,22 @@ export default function ServicesPage() {
         lead="Que vous partiez de zéro ou que vous refassiez un site dépassé, on a ce qu'il vous faut."
         meta="Sherbrooke · Estrie — Sites sur mesure, SEO local"
         aside={
-          <nav
-            aria-label="Aller à un service"
-            className="rounded-2xl bg-wash p-3 md:p-4"
-          >
-            <p className="text-eyebrow px-3 pb-2 pt-2 text-ink-soft">
-              Trois services
-            </p>
-            <ul className="flex flex-col">
-              {services.map((service, i) => (
-                <li key={service.slug}>
-                  <a
-                    href={`#${service.slug}`}
-                    className="group flex min-h-[52px] items-center gap-4 rounded-xl border border-hairline bg-paper-raised px-4 py-3 transition-all duration-300 ease-editorial hover:border-accent/45 hover:bg-paper [&:not(:first-of-type)]:mt-2"
-                  >
-                    <span
-                      aria-hidden
-                      className="font-serif text-[17px] italic leading-none text-accent"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="flex-1 text-[15px] font-semibold text-ink">
-                      {service.title}
-                    </span>
-                    <span
-                      aria-hidden
-                      className="text-[14px] text-ink-soft transition-all duration-300 ease-editorial group-hover:translate-y-0.5 group-hover:text-accent"
-                    >
-                      ↓
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <ServicesAnchorNav
+            items={services.map(({ slug, title }) => ({ slug, title }))}
+          />
         }
       />
 
-      {/* ——— Les trois services ——— */}
+      {/* ——— Les trois services — le catalogue de caractères ———
+          Chaque article vit dans ServiceArticle : numéral en deux
+          couches qui s'encre à la lecture, colonne gauche collante au
+          desktop, titre en hover WONK. Les ancres #slug restent
+          intactes (l'accueil pointe dessus). */}
       <Section className="pt-0 md:pt-0 lg:pt-0" rule={false}>
         <div className="flex flex-col">
           {services.map((service, i) => (
             <Reveal key={service.slug}>
-              <article
-                id={service.slug}
-                className="grid gap-10 border-t border-hairline py-14 scroll-mt-24 md:grid-cols-12 md:gap-12 md:py-20"
-              >
-                <div className="md:col-span-5">
-                  <span
-                    aria-hidden
-                    className="block font-serif text-[64px] font-[400] italic leading-[0.85] tracking-[-0.02em] text-accent/20 select-none md:text-[76px]"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h2 className="text-title mt-5 text-ink">{service.title}</h2>
-                  <p className="mt-4 max-w-[44ch] text-[16px] leading-relaxed text-ink-soft">
-                    {service.short}
-                  </p>
-                  <div className="mt-8 hidden md:block">
-                    <Button href="/contact" variant="link">
-                      Démarrer un projet
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-9 md:col-span-7 md:pt-3">
-                  <div>
-                    <h3 className="text-eyebrow flex items-center gap-3 text-ink-soft">
-                      <span
-                        aria-hidden
-                        className="inline-block h-2 w-2 bg-accent"
-                      />
-                      Pour qui
-                    </h3>
-                    <p className="mt-3 max-w-[58ch] text-[16px] leading-relaxed text-ink">
-                      {service.forWho}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-eyebrow flex items-center gap-3 text-ink-soft">
-                      <span
-                        aria-hidden
-                        className="inline-block h-2 w-2 bg-accent"
-                      />
-                      Ce qui est inclus
-                    </h3>
-                    <ul className="mt-4 grid gap-x-8 gap-y-3 border-t border-hairline pt-4 sm:grid-cols-2">
-                      {service.included.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-baseline gap-3 text-[16px] leading-relaxed text-ink"
-                        >
-                          <span
-                            aria-hidden
-                            className="h-[5px] w-[5px] shrink-0 translate-y-[-2px] rounded-full bg-accent"
-                          />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-2xl bg-wash p-7 md:p-8">
-                    <h3 className="text-eyebrow text-accent-deep">
-                      Le résultat
-                    </h3>
-                    <p className="mt-3 max-w-[46ch] font-serif text-[20px] font-[440] italic leading-snug tracking-[-0.01em] text-ink md:text-[22px]">
-                      {service.outcome}
-                    </p>
-                  </div>
-                  <div className="md:hidden">
-                    <Button href="/contact" variant="link">
-                      Démarrer un projet
-                    </Button>
-                  </div>
-                </div>
-              </article>
+              <ServiceArticle service={service} index={i} />
             </Reveal>
           ))}
         </div>

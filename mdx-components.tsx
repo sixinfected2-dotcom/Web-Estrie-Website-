@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import { TextReveal } from "@/components/motion/TextReveal";
+import { RuleDraw } from "@/components/motion/RuleDraw";
 
 /**
  * Styles éditoriaux des articles de blogue — même échelle typographique
@@ -7,12 +9,16 @@ import Link from "next/link";
  */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    h2: ({ children, ...props }) => (
+    h2: ({ children }) => (
       <div className="mt-12 first:mt-0">
-        <span aria-hidden className="block h-px w-8 bg-accent" />
-        <h2 className="text-heading mt-4 max-w-[30ch] text-ink" {...props}>
-          {children}
-        </h2>
+        {/* La règle se trace, puis l'intertitre monte derrière son masque. */}
+        <RuleDraw className="h-px w-8 bg-accent" />
+        <TextReveal
+          as="h2"
+          inView
+          className="text-heading mt-4 max-w-[30ch] text-ink"
+          lines={[children]}
+        />
       </div>
     ),
     h3: (props) => (

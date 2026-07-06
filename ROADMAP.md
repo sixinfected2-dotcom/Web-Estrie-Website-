@@ -25,7 +25,7 @@
 | 4 | Contact (formulaire Resend/Zod/honeypot) | ✅ Fait — ⚠️ clé Resend manquante (voir Décisions) |
 | 5 | Passe motion (reveals, marquee, magnétique) | ✅ Fait |
 | 6 | SEO technique (metadata, JSON-LD, sitemap, OG) | ✅ Fait |
-| 7 | QA (build/lint/responsive/formulaire) | 🟡 Fait pour v1 — **à refaire après l'élévation design** (Lighthouse, a11y approfondie, cross-browser) |
+| 7 | QA (build/lint/responsive/formulaire) | 🟡 Rebuild « Belle Épreuve » testé (Session 6) : Lighthouse mobile perf ~91 / a11y 96 / BP 96 / SEO 100, responsive 375 + menu mobile OK — **reste : cross-browser réel + validation visuelle client** |
 | 8 | Déploiement (GitHub + Vercel) | ✅ Fait — domaine custom `webestrie.ca` connecté et vérifié |
 | 9 | Post-launch (analytics, rank tracking, alertes) | ⬜ Pas commencé |
 

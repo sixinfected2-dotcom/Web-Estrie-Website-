@@ -13,9 +13,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blogue" },
 };
 
+/** La date en numéraux d'imprimerie — « 02·07·2026 ». */
+function dateNumerals(iso: string) {
+  const [year, month, day] = iso.split("-");
+  return `${day}·${month}·${year}`;
+}
+
 export default function BloguePage() {
   const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
-  const [featured, ...rest] = sorted;
 
   return (
     <>
@@ -26,110 +31,67 @@ export default function BloguePage() {
       />
 
       <Section className="pt-0 md:pt-0 lg:pt-0" rule={false}>
-        {/* ——— Article vedette ——— */}
-        {featured ? (
-          <Reveal>
-            <article className="border-t border-hairline pt-10 md:pt-12">
-              <Link
-                href={`/blogue/${featured.slug}`}
-                className="group grid gap-8 rounded-2xl bg-wash p-7 sm:p-9 md:grid-cols-12 md:gap-12 md:p-12"
-              >
-                <div className="flex items-start justify-between gap-6 md:col-span-3 md:flex-col md:justify-start md:gap-8">
-                  <span
-                    aria-hidden
-                    className="font-serif text-[clamp(40px,5vw,56px)] italic leading-none text-accent"
-                  >
-                    01
-                  </span>
-                  <div className="flex flex-col gap-1.5 text-right md:text-left">
-                    <p className="text-eyebrow text-accent-deep">
-                      Dernier article
-                    </p>
-                    <time
-                      dateTime={featured.date}
-                      className="mt-1 text-[14px] text-ink-soft"
-                    >
-                      {formatDate(featured.date)}
-                    </time>
-                    <span className="text-[13px] text-ink-soft">
-                      {featured.readingMinutes} min de lecture
-                    </span>
-                  </div>
-                </div>
-                <div className="md:col-span-9">
-                  <h2 className="text-title max-w-[26ch] text-ink transition-colors duration-300 group-hover:text-accent">
-                    {featured.title}
-                  </h2>
-                  <p className="mt-5 max-w-[62ch] text-[16px] leading-relaxed text-ink-soft">
-                    {featured.excerpt}
-                  </p>
-                  <span className="mt-7 inline-flex min-h-[44px] items-center gap-2 text-[15px] font-semibold text-ink underline decoration-accent decoration-[1.5px] underline-offset-[5px] transition-colors group-hover:text-accent">
-                    Lire l&rsquo;article
-                    <span
-                      aria-hidden
-                      className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
-                    >
-                      →
-                    </span>
-                  </span>
-                </div>
-              </Link>
-            </article>
-          </Reveal>
-        ) : null}
+        {/* ——— Ligne meta du sommaire ——— */}
+        <Reveal y={0}>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-t border-hairline pt-6 md:pt-7">
+            <p className="text-eyebrow text-ink-soft">Derniers articles</p>
+            <p className="text-eyebrow text-ink-soft/80">
+              {String(sorted.length).padStart(2, "0")}{" "}
+              {sorted.length > 1 ? "articles" : "article"}
+            </p>
+          </div>
+        </Reveal>
 
-        {/* ——— Articles suivants ——— */}
-        {rest.length > 0 ? (
-          <div className="mt-14 flex flex-col md:mt-16">
-            {rest.map((post, i) => (
-              <Reveal key={post.slug} delay={i * 0.07}>
-                <article className="border-t border-hairline">
-                  <Link
-                    href={`/blogue/${post.slug}`}
-                    className="group grid gap-4 py-10 md:grid-cols-12 md:gap-12 md:py-14"
-                  >
-                    <div className="flex items-baseline gap-6 md:col-span-3 md:gap-7">
+        {/* ——— Le sommaire du journal — rangées registre pleine largeur,
+                la date en numéraux Fraunces italiques, zéro carte. ——— */}
+        <div className="mt-10 border-b border-hairline md:mt-12">
+          {sorted.map((post, i) => (
+            <Reveal key={post.slug} delay={i * 0.08}>
+              <article className="border-t border-hairline">
+                <Link
+                  href={`/blogue/${post.slug}`}
+                  className="group grid gap-y-5 py-10 md:grid-cols-12 md:gap-x-12 md:py-14"
+                >
+                  <div className="md:col-span-3">
+                    <time
+                      dateTime={post.date}
+                      className="block font-serif text-[clamp(26px,3.4vw,38px)] font-[400] italic leading-none tracking-[-0.01em] text-accent"
+                    >
+                      {dateNumerals(post.date)}
+                    </time>
+                    <p className="mt-3 text-[13px] text-ink-soft">
+                      {formatDate(post.date)} · {post.readingMinutes} min de
+                      lecture
+                    </p>
+                  </div>
+                  <div className="md:col-span-8">
+                    <h2 className="wonk-hover text-heading max-w-[34ch] text-ink transition-colors duration-300 [--wonk-opsz:45] group-hover:text-accent-deep">
+                      {post.title}
+                    </h2>
+                    <p className="mt-3 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
+                      {post.excerpt}
+                    </p>
+                    <span className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-[14px] font-semibold text-ink underline decoration-accent decoration-[1.5px] underline-offset-[5px] transition-colors group-hover:text-accent">
+                      Lire l&rsquo;article
                       <span
                         aria-hidden
-                        className="font-serif text-[22px] italic leading-none text-accent"
+                        className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
                       >
-                        {String(i + 2).padStart(2, "0")}
+                        →
                       </span>
-                      <div className="flex items-baseline gap-6 md:flex-col md:gap-2">
-                        <time
-                          dateTime={post.date}
-                          className="text-[14px] text-ink-soft"
-                        >
-                          {formatDate(post.date)}
-                        </time>
-                        <span className="text-[13px] text-ink-soft">
-                          {post.readingMinutes} min de lecture
-                        </span>
-                      </div>
-                    </div>
-                    <div className="md:col-span-9">
-                      <h2 className="text-heading max-w-[32ch] text-ink transition-colors group-hover:text-accent">
-                        {post.title}
-                      </h2>
-                      <p className="mt-3 max-w-[62ch] text-[15.5px] leading-relaxed text-ink-soft">
-                        {post.excerpt}
-                      </p>
-                      <span className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-[14px] font-semibold text-ink underline decoration-accent decoration-[1.5px] underline-offset-[5px] transition-colors group-hover:text-accent">
-                        Lire l&rsquo;article
-                        <span
-                          aria-hidden
-                          className="transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
-                        >
-                          →
-                        </span>
-                      </span>
-                    </div>
-                  </Link>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        ) : null}
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden
+                    className="hidden text-[24px] leading-none text-ink-soft/60 transition-all duration-300 ease-editorial group-hover:translate-x-1.5 group-hover:text-accent md:col-span-1 md:block md:self-center md:justify-self-end"
+                  >
+                    →
+                  </span>
+                </Link>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </Section>
 
       <FinalCta

@@ -4,7 +4,7 @@ export const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-fraunces",
-  axes: ["opsz"],
+  axes: ["opsz", "WONK"],
 });
 
 export const hanken = Hanken_Grotesk({

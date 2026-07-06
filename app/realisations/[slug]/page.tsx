@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section, Eyebrow } from "@/components/ui/Section";
@@ -7,6 +6,10 @@ import { BrowserFrame } from "@/components/ui/BrowserFrame";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { Reveal } from "@/components/motion/Reveal";
 import { ImageReveal } from "@/components/motion/ImageReveal";
+import { KineticTitle } from "@/components/motion/KineticTitle";
+import { ParallaxLayer } from "@/components/motion/ParallaxLayer";
+import { WorkNumeral } from "@/components/sections/work/WorkNumeral";
+import { CaseNavLink } from "@/components/sections/work/CaseNavLink";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { caseStudies, getCaseStudy } from "@/content/realisations/data";
 
@@ -39,7 +42,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <>
-      {/* ——— En-tête ——— */}
+      {/* ——— En-tête — le nom du client comme une une de journal ——— */}
       <header className="pt-[72px]">
         <Container className="pb-14 pt-20 md:pb-16 md:pt-28">
           <Reveal y={0}>
@@ -47,17 +50,18 @@ export default async function CaseStudyPage({ params }: Props) {
               {study.sector} · {study.service}
             </Eyebrow>
           </Reveal>
-          <Reveal delay={0.08}>
-            <h1 className="text-display mt-5 max-w-[16ch] text-ink">
-              {study.client}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.18}>
+          <KineticTitle
+            bloom
+            delay={0.12}
+            className="text-display mt-5 max-w-[16ch] text-ink"
+            lines={[study.client]}
+          />
+          <Reveal delay={0.3}>
             <p className="text-lead mt-6 max-w-[52ch] text-ink-soft">
               {study.oneLiner}
             </p>
           </Reveal>
-          <Reveal delay={0.26}>
+          <Reveal delay={0.4}>
             <a
               href={study.url}
               target="_blank"
@@ -76,29 +80,35 @@ export default async function CaseStudyPage({ params }: Props) {
         </Container>
       </header>
 
-      {/* ——— Visuel principal : navigateur + téléphone en surimpression ——— */}
+      {/* ——— Visuel principal : navigateur + téléphone en surimpression,
+              parallaxe différentielle — la profondeur sans 3D. Le reveal
+              est one-shot immédiat (l'image est le LCP de la page). ——— */}
       <Container>
         <div className="relative pb-16 sm:pb-20 md:pb-24">
-          <ImageReveal>
-            <BrowserFrame
-              src={study.image}
-              alt={study.imageAlt}
-              url={domain}
-              priority
-              sizes="(min-width: 1200px) 1120px, 100vw"
-              aspect="aspect-[16/9]"
-            />
-          </ImageReveal>
-          <Reveal
-            delay={0.3}
+          <ParallaxLayer range={[20, -20]}>
+            <ImageReveal>
+              <BrowserFrame
+                src={study.image}
+                alt={study.imageAlt}
+                url={domain}
+                priority
+                sizes="(min-width: 1200px) 1120px, 100vw"
+                aspect="aspect-[16/9]"
+              />
+            </ImageReveal>
+          </ParallaxLayer>
+          <ParallaxLayer
+            range={[44, -44]}
             className="absolute -bottom-2 left-4 w-[104px] sm:w-[128px] md:left-8 md:w-[160px] lg:left-12 lg:w-[184px]"
           >
-            <PhoneFrame
-              src={study.imageMobile}
-              alt={`Version mobile — ${study.imageAlt}`}
-              sizes="(min-width: 1024px) 184px, (min-width: 768px) 160px, 128px"
-            />
-          </Reveal>
+            <Reveal delay={0.3}>
+              <PhoneFrame
+                src={study.imageMobile}
+                alt={`Version mobile — ${study.imageAlt}`}
+                sizes="(min-width: 1024px) 184px, (min-width: 768px) 160px, 128px"
+              />
+            </Reveal>
+          </ParallaxLayer>
         </div>
       </Container>
 
@@ -127,12 +137,11 @@ export default async function CaseStudyPage({ params }: Props) {
                 {study.work.map((item, i) => (
                   <Reveal key={item} delay={i * 0.07}>
                     <li className="flex items-baseline gap-5 border-b border-hairline py-4 md:py-[18px]">
-                      <span
-                        aria-hidden
+                      <WorkNumeral
+                        value={String(i + 1).padStart(2, "0")}
+                        delay={i * 0.07}
                         className="font-serif text-[16px] italic text-accent"
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+                      />
                       <p className="text-[16.5px] leading-relaxed text-ink">
                         {item}
                       </p>
@@ -232,44 +241,12 @@ export default async function CaseStudyPage({ params }: Props) {
               className="grid border-t border-hairline sm:grid-cols-2"
             >
               {prev ? (
-                <Link
-                  href={`/realisations/${prev.slug}`}
-                  className="group flex min-h-[44px] flex-col gap-2 border-b border-hairline py-8 pr-6 sm:border-b-0 sm:py-10"
-                >
-                  <span className="text-eyebrow text-ink-soft">
-                    Projet précédent
-                  </span>
-                  <span className="flex items-baseline gap-3 font-serif text-[clamp(22px,2.6vw,30px)] font-[430] tracking-[-0.014em] text-ink transition-colors duration-300 group-hover:text-accent">
-                    <span
-                      aria-hidden
-                      className="text-[0.7em] transition-transform duration-300 ease-editorial group-hover:-translate-x-0.5"
-                    >
-                      ←
-                    </span>
-                    {prev.client}
-                  </span>
-                </Link>
+                <CaseNavLink study={prev} direction="prev" />
               ) : (
                 <span aria-hidden className="hidden sm:block" />
               )}
               {next ? (
-                <Link
-                  href={`/realisations/${next.slug}`}
-                  className="group flex min-h-[44px] flex-col gap-2 py-8 sm:items-end sm:border-l sm:border-hairline sm:py-10 sm:pl-6 sm:text-right"
-                >
-                  <span className="text-eyebrow text-ink-soft">
-                    Projet suivant
-                  </span>
-                  <span className="flex items-baseline gap-3 font-serif text-[clamp(22px,2.6vw,30px)] font-[430] tracking-[-0.014em] text-ink transition-colors duration-300 group-hover:text-accent">
-                    {next.client}
-                    <span
-                      aria-hidden
-                      className="text-[0.7em] transition-transform duration-300 ease-editorial group-hover:translate-x-0.5"
-                    >
-                      →
-                    </span>
-                  </span>
-                </Link>
+                <CaseNavLink study={next} direction="next" />
               ) : (
                 <span
                   aria-hidden

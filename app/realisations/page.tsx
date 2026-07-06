@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
-import { CaseStudyRow } from "@/components/sections/CaseStudyRow";
+import { CaseStudyCard } from "@/components/sections/CaseStudyCard";
 import { caseStudies } from "@/content/realisations/data";
 
 export const metadata: Metadata = {
@@ -50,11 +50,14 @@ export default function RealisationsPage() {
           </div>
         </Reveal>
 
-        {/* ——— Les rangées, séparées par des filets éditoriaux ——— */}
+        {/* ——— Le sommaire — rangées registre, séparées par des filets ——— */}
         <div className="mt-14 flex flex-col gap-16 md:mt-16 md:gap-24">
           {caseStudies.map((study, i) => (
-            <Reveal key={study.slug} delay={0.05}>
-              <div className="border-t border-hairline pt-8 md:pt-10">
+            <div
+              key={study.slug}
+              className="border-t border-hairline pt-8 md:pt-10"
+            >
+              <Reveal y={0} delay={0.05}>
                 <div className="mb-8 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 md:mb-10">
                   <p className="text-eyebrow text-accent-deep">
                     {study.service} · {study.sector}
@@ -63,9 +66,9 @@ export default function RealisationsPage() {
                     {study.url.replace(/^https?:\/\//, "")}
                   </p>
                 </div>
-                <CaseStudyRow study={study} index={i} flip={i % 2 === 1} />
-              </div>
-            </Reveal>
+              </Reveal>
+              <CaseStudyCard study={study} index={i} flip={i % 2 === 1} />
+            </div>
           ))}
         </div>
       </Section>

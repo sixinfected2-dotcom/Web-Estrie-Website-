@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navLinks, services, site } from "@/lib/data";
 import { Container } from "../ui/Container";
+import { Reveal } from "../motion/Reveal";
 
 function MailIcon() {
   return (
@@ -40,14 +41,15 @@ function InstagramIcon() {
 }
 
 /**
- * Footer encre — il prolonge le CTA final sombre. Rangée d'invitation
- * en grand serif, quatre colonnes structurées par filets paper/12,
- * barre légale en pied. Hero clair / footer sombre = arc complet.
+ * Footer encre — il prolonge le CTA final sombre. Rangée d'invitation,
+ * colonnes structurées par filets paper/12, puis la grande signature :
+ * le wordmark en pleine page, comme on signe une épreuve avant l'envoi
+ * à l'impression. La barre légale ferme le registre.
  */
 export function Footer() {
   return (
-    <footer className="bg-ink">
-      <Container className="pb-12 pt-16 md:pb-14 md:pt-20">
+    <footer className="overflow-hidden bg-ink">
+      <Container className="pb-10 pt-16 md:pb-12 md:pt-20">
         {/* ——— Rangée haute — l'invitation ——— */}
         <div className="flex flex-col justify-between gap-8 border-b border-paper/12 pb-12 md:flex-row md:items-center md:pb-14">
           <p className="max-w-[18ch] font-serif text-[clamp(28px,3.4vw,42px)] font-[430] leading-[1.08] tracking-[-0.018em] text-paper">
@@ -68,16 +70,19 @@ export function Footer() {
           </Link>
         </div>
 
-        {/* ——— Grille — wordmark + trois colonnes de liens ——— */}
+        {/* ——— Grille — tagline + trois colonnes de liens ——— */}
         <div className="grid gap-x-8 gap-y-12 pt-12 sm:grid-cols-2 md:pt-14 lg:grid-cols-12">
           <div className="sm:col-span-2 lg:col-span-5 lg:pr-10">
-            <p className="font-serif text-[24px] font-[480] tracking-[-0.01em] text-paper">
-              Web Estrie<span className="text-accent-bright">.</span>
-            </p>
-            <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-paper/55">
+            <p className="max-w-sm font-serif text-[clamp(19px,1.8vw,22px)] font-[440] italic leading-[1.45] tracking-[-0.01em] text-paper/85">
               {site.tagline}
             </p>
-            <p className="mt-5 text-eyebrow text-paper/55">{site.region}</p>
+            <p className="text-eyebrow mt-5 flex items-center gap-3 text-paper/55">
+              <span
+                aria-hidden
+                className="inline-block h-2 w-2 bg-accent-bright"
+              />
+              {site.region}
+            </p>
           </div>
 
           <nav aria-label="Navigation du pied de page" className="lg:col-span-2">
@@ -147,8 +152,17 @@ export function Footer() {
           </div>
         </div>
 
+        {/* ——— La grande signature — l'épreuve est signée ——— */}
+        <div className="mt-16 border-t border-paper/12 pt-10 md:mt-20 md:pt-12">
+          <Reveal y={30}>
+            <p className="wonk-hover select-none whitespace-nowrap font-serif text-[clamp(3rem,11.5vw,10.25rem)] font-[420] leading-[0.92] tracking-[-0.032em] text-paper [--wonk-opsz:144] [font-variation-settings:'opsz'_144]">
+              Web Estrie<span className="text-accent-bright">.</span>
+            </p>
+          </Reveal>
+        </div>
+
         {/* ——— Barre légale ——— */}
-        <div className="mt-14 flex flex-col gap-2 border-t border-paper/12 pt-7 text-[13.5px] text-paper/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-2 border-t border-paper/12 pt-7 text-[13.5px] text-paper/55 sm:flex-row sm:items-center sm:justify-between md:mt-12">
           <p>© {new Date().getFullYear()} Web Estrie. Tous droits réservés.</p>
           <p>{site.region}</p>
         </div>

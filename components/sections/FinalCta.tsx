@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "../ui/Container";
 import { Reveal } from "../motion/Reveal";
+import { RuleDraw } from "../motion/RuleDraw";
 import { Magnetic } from "../motion/MagneticButton";
 import { site } from "@/lib/data";
 
@@ -14,9 +15,11 @@ type FinalCtaProps = {
 
 /**
  * CTA final pleine largeur en encre, registre éditorial aligné à gauche.
- * En toile de fond, un seul mot serif fantôme — « Parlons-en. » — la
- * seule occurrence de cet effet sur tout le site. Le footer (bg-ink lui
- * aussi) le prolonge — la page se termine ancrée dans l'encre.
+ * La règle typographique se trace en tête de section — la ponctuation
+ * systémique du passage paper → ink. En toile de fond, un seul mot serif
+ * fantôme — « Parlons-en. » — la seule occurrence de cet effet sur tout
+ * le site. Le footer (bg-ink lui aussi) le prolonge — la page se termine
+ * ancrée dans l'encre.
  */
 export function FinalCta({
   title,
@@ -25,7 +28,10 @@ export function FinalCta({
   instagram = false,
 }: FinalCtaProps) {
   return (
-    <section className="relative overflow-hidden border-t border-paper/12 bg-ink">
+    <section className="relative overflow-hidden bg-ink">
+      {/* La règle — le filet qui ponctue l'entrée dans l'encre. */}
+      <RuleDraw className="absolute inset-x-0 top-0 h-px bg-paper/15" />
+
       {/* Mot fantôme — décor typographique, invisible aux lecteurs d'écran. */}
       <span
         aria-hidden
@@ -33,18 +39,28 @@ export function FinalCta({
       >
         Parlons-en.
       </span>
+
       <Container className="relative z-10 py-28 md:py-40">
-        <Reveal>
-          <p className="text-eyebrow text-accent-bright">Prochaine étape</p>
+        <Reveal y={0}>
+          <p className="text-eyebrow flex items-center gap-3 text-accent-bright">
+            <span aria-hidden className="inline-block h-px w-8 bg-accent-bright" />
+            Prochaine étape
+          </p>
+        </Reveal>
+        <Reveal delay={0.08}>
           <h2 className="text-display mt-6 max-w-[18ch] text-paper">{title}</h2>
-          {body ? (
+        </Reveal>
+        {body ? (
+          <Reveal delay={0.18}>
             <p className="text-lead mt-7 max-w-[48ch] text-paper/70">{body}</p>
-          ) : null}
+          </Reveal>
+        ) : null}
+        <Reveal delay={0.28}>
           <div className="mt-12 flex flex-wrap items-center gap-7">
             <Magnetic>
               <Link
                 href="/contact"
-                className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[15px] font-semibold text-paper transition-colors duration-300 hover:bg-accent-bright"
+                className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-[15px] font-semibold text-paper transition-colors duration-300 hover:bg-accent-bright hover:text-ink"
               >
                 {cta}
                 <span

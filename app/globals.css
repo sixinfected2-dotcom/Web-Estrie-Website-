@@ -139,3 +139,250 @@ body::after {
     animation: none;
   }
 }
+
+/* ————— Intro « Belle Épreuve » — la composition de l'épreuve ————— */
+
+/* Posé par le script inline du <head> avant le premier paint. */
+html[data-intro="play"] {
+  overflow: hidden; /* scroll verrouillé pendant la composition (≤ 2,35 s) */
+}
+
+/* Visiteur qui a déjà vu l'intro, sous-page, ou script en échec :
+   le voile n'existe pas — zéro flash. */
+html:not([data-intro="play"]) .intro-veil {
+  display: none;
+}
+
+/* Double verrou : jamais d'intro sous reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+  .intro-veil {
+    display: none !important;
+  }
+}
+
+/* Phase 1 — composition : les mots montent derrière leur masque. */
+@keyframes intro-word-rise {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Le type « devient display » : bloom de l'axe optique. */
+@keyframes intro-bloom {
+  from {
+    font-variation-settings: "opsz" 40;
+    letter-spacing: 0;
+  }
+  to {
+    font-variation-settings: "opsz" 144;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Phase 2 — le point : chute accélérée, impact sur la platine, retour. */
+@keyframes intro-dot-drop {
+  0% {
+    opacity: 1;
+    transform: translateY(-0.9em) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+    animation-timing-function: ease-out;
+  }
+  66% {
+    opacity: 1;
+    transform: translateY(0) scale(1.12, 0.82);
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+/* Phase 3 — la règle se trace, l'eyebrow se pose. */
+@keyframes intro-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-eyebrow-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Phase 4 — levée d'épreuve : auto-sortie garantie par le keyframe. */
+@keyframes intro-lockup-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10vh);
+  }
+}
+
+@keyframes intro-veil-lift {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    visibility: visible;
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-skip-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.intro-veil {
+  animation: intro-veil-lift 620ms var(--ease-editorial) 1650ms forwards;
+}
+
+.intro-lockup {
+  animation: intro-lockup-exit 500ms var(--ease-editorial) 1650ms forwards;
+}
+
+.intro-wordmark {
+  animation: intro-bloom 1150ms var(--ease-editorial) 100ms both;
+}
+
+.intro-word {
+  animation: intro-word-rise 850ms var(--ease-editorial) both;
+}
+
+.intro-word--1 {
+  animation-delay: 100ms;
+}
+
+.intro-word--2 {
+  animation-delay: 210ms;
+}
+
+.intro-dot {
+  opacity: 0;
+  transform-origin: 50% 100%;
+  animation: intro-dot-drop 500ms 850ms forwards;
+}
+
+.intro-rule {
+  transform-origin: center;
+  animation: intro-rule-draw 600ms var(--ease-editorial) 1050ms both;
+}
+
+.intro-eyebrow {
+  animation: intro-eyebrow-rise 450ms var(--ease-editorial) 1200ms both;
+}
+
+.intro-skip {
+  animation: intro-skip-in 300ms ease-out 400ms both;
+}
+
+/* Skip — mêmes gestes, tempo resserré (noms distincts pour relancer). */
+@keyframes intro-veil-skip {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    visibility: visible;
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-lockup-skip {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.intro-veil--skip {
+  animation: intro-veil-skip 350ms var(--ease-editorial) forwards;
+}
+
+.intro-veil--skip .intro-lockup {
+  animation: intro-lockup-skip 200ms ease-out forwards;
+}
+
+.intro-veil--skip .intro-skip {
+  animation: intro-lockup-skip 200ms ease-out forwards;
+}
+
+/* ————— Hover signature WONK — le caractère se penche à l'encrage ————— */
+
+/* Chaque usage définit `--wonk-opsz` à la valeur opsz de base de
+   l'élément (sinon l'axe optique saute au survol). Nécessite l'axe
+   WONK dans lib/fonts.ts pour l'effet complet. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wonk-hover {
+    transition: font-variation-settings 350ms var(--ease-editorial);
+  }
+
+  .wonk-hover:hover,
+  .group:hover .wonk-hover {
+    font-variation-settings:
+      "opsz" var(--wonk-opsz, 130),
+      "WONK" 1;
+  }
+}
+
+/* ————— Lettrine du blogue — CSS pur, conservée en reduced-motion ————— */
+
+.lettrine > p:first-of-type::first-letter {
+  float: left;
+  margin-top: 0.08em;
+  padding-right: 0.14em;
+  font-family: var(--font-serif);
+  font-size: 3.2em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+  line-height: 0.8;
+  color: var(--color-accent-deep);
+}
+
+/* ————— Pulsation du dot « On vous répond vite » (contact) ————— */
+
+@keyframes dot-pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dot-pulse {
+    animation: dot-pulse 2.4s ease-in-out infinite alternate;
+  }
+}
