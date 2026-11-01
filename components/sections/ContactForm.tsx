@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { privacyPath } from "@/lib/privacy";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -242,6 +244,16 @@ export function ContactForm() {
             </span>
           )}
         </button>
+        <p className="mt-5 max-w-[52ch] text-[13px] leading-relaxed text-ink-soft">
+          En envoyant ce formulaire, vous acceptez que Web Estrie utilise ces
+          renseignements pour répondre à votre demande.{" "}
+          <Link
+            href={privacyPath}
+            className="font-medium text-ink underline decoration-accent decoration-[1.5px] underline-offset-[3px] transition-colors hover:text-accent"
+          >
+            Politique de confidentialité
+          </Link>
+        </p>
       </div>
     </form>
   );

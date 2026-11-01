@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/data";
 import { caseStudies } from "@/content/realisations/data";
 import { posts } from "@/lib/blogue";
+import { privacyPath } from "@/lib/privacy";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/approche", priority: 0.7 },
     { path: "/contact", priority: 0.9 },
     { path: "/blogue", priority: 0.6 },
+    { path: privacyPath, priority: 0.3 },
   ].map(({ path, priority }) => ({
     url: `${site.url}${path}`,
     lastModified: new Date(),

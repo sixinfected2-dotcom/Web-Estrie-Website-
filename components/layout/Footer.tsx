@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { navLinks, services, site } from "@/lib/data";
+import { privacyPath } from "@/lib/privacy";
 import { Container } from "../ui/Container";
 import { Reveal } from "../motion/Reveal";
 
@@ -164,7 +165,15 @@ export function Footer() {
         {/* ——— Barre légale ——— */}
         <div className="mt-10 flex flex-col gap-2 border-t border-paper/12 pt-7 text-[13.5px] text-paper/55 sm:flex-row sm:items-center sm:justify-between md:mt-12">
           <p>© {new Date().getFullYear()} Web Estrie. Tous droits réservés.</p>
-          <p>{site.region}</p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+            <Link
+              href={privacyPath}
+              className="inline-flex min-h-10 items-center text-paper/75 underline decoration-paper/30 underline-offset-[5px] transition-colors hover:text-accent-bright hover:decoration-accent-bright"
+            >
+              Politique de confidentialité
+            </Link>
+            <p>{site.region}</p>
+          </div>
         </div>
       </Container>
     </footer>
