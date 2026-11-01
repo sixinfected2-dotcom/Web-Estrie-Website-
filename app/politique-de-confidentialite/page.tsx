@@ -288,9 +288,9 @@ export default function PrivacyPage() {
             {/* ——— 5 ——— */}
             <LegalSection id="conservation" index={n("conservation")} title={title("conservation")}>
               <P>
-                Nous gardons les messages reçus par le formulaire{" "}
-                <Pending>durée proposée&nbsp;: 24 mois après notre dernier échange</Pending>
-                , puis nous les détruisons ou nous les anonymisons.
+                Nous gardons les messages reçus par le formulaire pendant 24 mois
+                après notre dernier échange, puis nous les détruisons ou nous les
+                anonymisons.
               </P>
               <P>
                 Si vous devenez client, nous conservons les renseignements
