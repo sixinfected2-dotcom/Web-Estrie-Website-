@@ -83,17 +83,3 @@ export function Tech({ children }: { children: React.ReactNode }) {
     </code>
   );
 }
-
-/**
- * Point à trancher par Felix avant la mise en ligne. Visible à l'écran
- * (fond sable + étiquette) pour qu'aucun marqueur ne passe inaperçu :
- * on le remplace par le texte final une fois la décision prise.
- */
-export function Pending({ children }: { children: React.ReactNode }) {
-  return (
-    <mark className="rounded-sm bg-wash px-1.5 py-0.5 text-ink [box-decoration-break:clone]">
-      <span className="text-eyebrow mr-2 text-accent-deep">À confirmer</span>
-      {children}
-    </mark>
-  );
-}

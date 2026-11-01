@@ -12,7 +12,6 @@ import {
   A,
   H3,
   P,
-  Pending,
   Tech,
   UL,
 } from "@/components/sections/legal/prose";
@@ -102,8 +101,7 @@ export default function PrivacyPage() {
                 </LedgerRow>
                 <LedgerRow label="Responsable">
                   <p>
-                    Felix Stebenne,{" "}
-                    <Pending>titre à confirmer (par exemple fondateur)</Pending>
+                    Felix Stebenne, propriétaire
                   </p>
                   <p className="text-[14.5px]">
                     Responsable de la protection des renseignements personnels
@@ -256,12 +254,8 @@ export default function PrivacyPage() {
                 </LedgerRow>
                 <LedgerRow label="Google (Gmail)">
                   <p>
-                    Boîte de réception de l’agence, où arrive votre message et où
-                    se poursuivent nos échanges.{" "}
-                    <Pending>
-                      à confirmer une fois la variable CONTACT_EMAIL définie sur
-                      Vercel
-                    </Pending>
+                    Boîte de réception de l’agence, où nous recevons et gardons
+                    nos courriels, y compris nos échanges avec vous.
                   </p>
                   <p>
                     <span className="font-medium text-ink">Renseignements&nbsp;:</span>{" "}
