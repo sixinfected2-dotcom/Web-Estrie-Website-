@@ -131,6 +131,30 @@ Felix a désactivé le proxy sur les deux enregistrements via le dashboard Cloud
 
 ---
 
+## Session 7 — Politique de confidentialité (2026-10-31)
+
+**Objectif.** Demandé par la session « Web Estrie CRM » (dépôt séparé `web-estrie-crm`, étape 1) : Google refuse de publier l'application OAuth « Web Estrie CRM » (sortir du mode « Test », dont les jetons expirent après 7 jours) tant que la page Branding n'a pas une politique de confidentialité sur un domaine autorisé (`webestrie.ca`). La Loi 25 l'exigeait déjà à cause du formulaire de contact. Une seule page sert aux deux.
+
+**Livré (en ligne le 2026-10-31, fast-forward `cc6a2af..7a206e4` sur `main`).**
+- `/politique-de-confidentialite` : 10 sections (responsable, renseignements recueillis, finalités et consentement, fournisseurs et communication hors Québec, conservation, sécurité, témoins, droits, **Web Estrie CRM et les données Google**, modifications) + la phrase d'utilisation limitée des API Google (français + anglais officiel) avec le lien vers la politique de Google.
+- Fichiers : `app/politique-de-confidentialite/page.tsx`, `components/sections/legal/` (`LegalSection`, `LegalToc` collante avec section active et `<details>` sur mobile, primitives de lecture `prose.tsx`), `lib/privacy.ts` (chemin + date de mise à jour, à changer à chaque révision du texte).
+- Lien dans la barre légale du footer, mention « En envoyant ce formulaire… » sous le bouton d'envoi, ajout au `sitemap`.
+- Vérifié en ligne : `www` 200, apex 308 → `www`, présent dans `sitemap.xml` et dans le footer, aucun marqueur restant. Build et lint verts, captures 1280 px et 375 px regardées. Texte sans tiret cadratin et sans mention de l'IA.
+
+**Décisions de Felix.** Responsable de la protection des renseignements personnels : Felix Stebenne, propriétaire. Conservation des messages du formulaire : 24 mois après le dernier échange. Sauvegarde hors site du CRM : restic chiffré vers Cloudflare R2 (plan `PHASE-0.md` du CRM, §6.8), dit tel quel sur la page. Publier tout de suite, même si `info@webestrie.ca` n'a pas encore de MX. **Resend, les formulaires et les automatisations courriel seront refaits plus tard, une fois la base du CRM terminée.**
+
+**Pièges et constats (à relire avant de toucher au formulaire ou au CRM).**
+- ⚠️ **Le formulaire de contact ne peut rien envoyer en production** : `vercel env ls` sur le projet `web-estrie-website` ne montre aucune variable d'environnement (ni `RESEND_API_KEY`, ni `CONTACT_EMAIL`). L'expéditeur par défaut `onboarding@resend.dev` est un expéditeur de test (en général limité à l'adresse du compte Resend). Les visiteurs voient « service temporairement indisponible ». La page décrit le formulaire tel que conçu (Vercel + Resend) : **au moment de le refaire, relire les sections 2, 4 et 9 et mettre à jour `lib/privacy.ts`.**
+- ⚠️ **`info@webestrie.ca` n'a aucun MX** (DNS public, 2026-10-31) alors que la page l'affiche comme courriel du responsable (Loi 25, et contact possible pour Google) et promet une réponse en 30 jours. Piste prévue au CRM (D-016, D-143) : routage de courriels de Cloudflare vers le Gmail de l'agence. Ne jamais modifier les enregistrements existants du site (Vercel), seulement en ajouter.
+- ⚠️ **La page engage le CRM** : synchronisation limitée aux fils liés à des clients ou prospects, aucun envoi sans action d'une personne, un seul compte Google connecté, données Google jamais partagées avec des tiers. Si un agent IA ou un MCP lit le contenu des courriels, la page devient fausse et la politique de Google (utilisation limitée) interdit le transfert : **modifier la page avant d'ajouter cette fonction.** Si la sauvegarde change de fournisseur ou de chiffrement, la page aussi.
+- Ce texte n'est pas un avis juridique. Points restés ouverts, sans bloquer : évaluation des facteurs relatifs à la vie privée avant la communication hors Québec (Vercel, Resend, Google, Cloudflare), et consentement par l'envoi du formulaire seul (pas de case à cocher). Détail dans les notes de session : `side-session-notes/local_13efcf07-…/politique-confidentialite/REVUE-POUR-FELIX.md`.
+- Outils : le CLI Vercel est connecté (compte `sixinfected2-1819`) ; pour lire le projet sans toucher au dépôt, `vercel link --yes --project web-estrie-website` dans un dossier temporaire, puis `vercel env ls` (noms seulement). L'aperçu intégré de Claude retarde les `Reveal` quand son volet est caché (page blanche au premier rendu) : ce n'est pas un bug du site, un scroll ou un screenshot relance les animations.
+- ⚠️ **Fusion faite depuis un worktree** (`git push origin HEAD:main`) pour ne pas toucher au dépôt principal : son `main` local est en retard de 5 commits et son `JOURNAL.md` non commité (condensation du 09-25, voir `PROJECT_HANDOFF.md`) entre en conflit avec cette entrée. Avant un `git pull --ff-only` dans le dépôt principal : committer ou ranger cette condensation, puis refaire la fusion à la main.
+
+**Reste à faire dans Google Cloud (Felix).** Google Auth Platform › **Branding** : page d'accueil `https://www.webestrie.ca`, politique de confidentialité `https://www.webestrie.ca/politique-de-confidentialite`, domaine autorisé `webestrie.ca`, **aucun logo** (un logo déclenche une vérification de marque). Puis **Audience › Publier l'application**, sans soumettre à la vérification (un écran « application non vérifiée » s'affichera à la connexion : normal pour un usage personnel).
+
+---
+
 ## Convention pour les prochaines entrées
 
 Ajoute une nouvelle section `## Session N — <titre> (date)` en bas de ce fichier après chaque session de travail significative. Inclus : le feedback ou objectif de départ, les décisions prises et **pourquoi**, ce qui a été livré, et tout incident/piège rencontré qui pourrait re-piéger une session future.
