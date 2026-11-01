@@ -102,7 +102,8 @@ export default function PrivacyPage() {
                 </LedgerRow>
                 <LedgerRow label="Responsable">
                   <p>
-                    <Pending>prénom, nom et titre du responsable</Pending>
+                    Felix Stebenne,{" "}
+                    <Pending>titre à confirmer (par exemple fondateur)</Pending>
                   </p>
                   <p className="text-[14.5px]">
                     Responsable de la protection des renseignements personnels
@@ -258,8 +259,8 @@ export default function PrivacyPage() {
                     Boîte de réception de l’agence, où arrive votre message et où
                     se poursuivent nos échanges.{" "}
                     <Pending>
-                      confirmer que le courriel du formulaire arrive bien dans le
-                      compte Gmail de l’agence
+                      à confirmer une fois la variable CONTACT_EMAIL définie sur
+                      Vercel
                     </Pending>
                   </p>
                   <p>
@@ -427,10 +428,10 @@ export default function PrivacyPage() {
                 Les données sont stockées sur un serveur de l’agence situé au
                 Québec. L’accès à l’outil est acheminé par le réseau de
                 Cloudflare, qui assure la protection et la livraison du trafic.
-                Des copies de sauvegarde chiffrées sont conservées hors du
-                serveur{" "}
-                <Pending>fournisseur et pays de la sauvegarde hors site</Pending>
-                .
+                Des copies de sauvegarde sont conservées hors du serveur, chez
+                Cloudflare (stockage R2), dans un centre de données nord-américain
+                qui peut se trouver hors du Québec. Elles sont chiffrées avant
+                leur envoi : Cloudflare ne peut pas lire leur contenu.
               </P>
 
               <H3>Ce que nous ne faisons pas</H3>
